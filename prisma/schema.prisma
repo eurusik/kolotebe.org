@@ -1,0 +1,411 @@
+// Kolotebe MVP - Database Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER MANAGEMENT
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // For credentials login
+  phone         String?   @unique
+  phoneVerified Boolean   @default(false)
+  role          UserRole  @default(USER)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  locations     UserLocation[]
+  bookCopies    BookCopy[]
+  listings      Listing[]
+  requestedTransfers BookTransfer[] @relation("TransferRequester")
+  ownedTransfers     BookTransfer[] @relation("TransferOwner")
+  balance            UserBalance?
+  transactions       UserBalanceTransaction[]
+  holds              TransactionHold[]
+  initiatedDisputes  Dispute[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model UserLocation {
+  id          String   @id @default(cuid())
+  userId      String
+  
+  type        LocationType @default(HOME)
+  isDefault   Boolean  @default(false)
+  
+  street      String
+  city        String
+  postalCode  String?
+  country     String   @default("Ukraine")
+  
+  latitude    Float?
+  longitude   Float?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_locations")
+}
+
+// ============================================
+// BOOK CATALOG
+// ============================================
+
+model Book {
+  id            String   @id @default(cuid())
+  
+  title         String
+  author        String
+  isbn          String?  @unique
+  genre         String?
+  publicationYear Int?
+  coverImage    String?
+  description   String?  @db.Text
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  
+  // Relations
+  copies        BookCopy[]
+
+  @@index([title, author])
+  @@map("books")
+}
+
+model BookCopy {
+  id          String   @id @default(cuid())
+  bookId      String
+  ownerId     String
+  
+  condition   BookCondition @default(GOOD)
+  notes       String?  @db.Text
+  isAvailable Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  owner  User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  listing Listing?
+
+  @@index([ownerId])
+  @@index([bookId])
+  @@map("book_copies")
+}
+
+// ============================================
+// LISTINGS AND TRANSFERS
+// ============================================
+
+model Listing {
+  id             String   @id @default(cuid())
+  bookCopyId     String   @unique
+  userId         String
+  slug           String   @unique // SEO-friendly URL slug
+  
+  status         ListingStatus @default(ACTIVE)
+  description    String?  @db.Text
+  photos         String[] // Array of photo URLs
+  
+  // Transfer options
+  transferTypes   TransferType[]
+  deliveryMethods DeliveryMethod[]
+  
+  // Location info
+  pickupLocation  String?
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+  
+  bookCopy BookCopy @relation(fields: [bookCopyId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  transfers BookTransfer[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([slug])
+  @@map("listings")
+}
+
+model BookTransfer {
+  id              String   @id @default(cuid())
+  listingId       String
+  requesterId     String
+  ownerId         String
+  
+  transferType    TransferType
+  deliveryMethod  DeliveryMethod
+  status          TransferStatus @default(REQUESTED)
+  
+  // Delivery info
+  deliveryAddress String?
+  trackingCode    String?
+  
+  // Type-specific fields
+  returnDate      DateTime? // For loans
+  tradeBookCopyId String?   // For trades
+  
+  // Status timestamps
+  requestedAt     DateTime  @default(now())
+  agreedAt        DateTime?
+  inTransitAt     DateTime?
+  deliveredAt     DateTime?
+  completedAt     DateTime?
+  cancelledAt     DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+  
+  listing   Listing @relation(fields: [listingId], references: [id])
+  requester User    @relation("TransferRequester", fields: [requesterId], references: [id])
+  owner     User    @relation("TransferOwner", fields: [ownerId], references: [id])
+  
+  // Relations
+  transactions UserBalanceTransaction[]
+  holds        TransactionHold[]
+  dispute      Dispute?
+
+  @@index([requesterId])
+  @@index([ownerId])
+  @@index([status])
+  @@map("book_transfers")
+}
+
+// ============================================
+// KOLOKOIN ECONOMY
+// ============================================
+
+model UserBalance {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  
+  balance       Int      @default(0)
+  version       Int      @default(0) // For optimistic locking
+  
+  updatedAt     DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_balances")
+}
+
+model UserBalanceTransaction {
+  id              String   @id @default(cuid())
+  userId          String
+  transferId      String?
+  
+  type            TransactionType
+  amount          Int // Positive for credits, negative for debits
+  description     String?
+  
+  createdAt       DateTime @default(now())
+  
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transfer BookTransfer? @relation(fields: [transferId], references: [id])
+
+  @@index([userId])
+  @@index([transferId])
+  @@map("user_balance_transactions")
+}
+
+model TransactionHold {
+  id          String   @id @default(cuid())
+  userId      String
+  transferId  String
+  
+  amount      Int
+  status      HoldStatus @default(ACTIVE)
+  
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+  releasedAt  DateTime?
+  capturedAt  DateTime?
+  
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transfer BookTransfer @relation(fields: [transferId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([transferId])
+  @@index([status])
+  @@map("transaction_holds")
+}
+
+// ============================================
+// DISPUTES
+// ============================================
+
+model Dispute {
+  id            String   @id @default(cuid())
+  transferId    String   @unique
+  initiatorId   String
+  
+  category      DisputeCategory
+  description   String   @db.Text
+  evidence      String[] // Array of evidence URLs/descriptions
+  
+  status        DisputeStatus @default(OPEN)
+  resolution    String?  @db.Text
+  adminNotes    String?  @db.Text
+  
+  createdAt     DateTime @default(now())
+  reviewedAt    DateTime?
+  resolvedAt    DateTime?
+  closedAt      DateTime?
+  
+  transfer  BookTransfer @relation(fields: [transferId], references: [id])
+  initiator User         @relation(fields: [initiatorId], references: [id])
+
+  @@index([status])
+  @@map("disputes")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum UserRole {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum LocationType {
+  HOME
+  WORK
+  PICKUP_POINT
+  OTHER
+}
+
+enum BookCondition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+  POOR
+}
+
+enum ListingStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum TransferType {
+  FREE
+  FOR_KOLOCOINS
+  TRADE
+  LOAN
+}
+
+enum DeliveryMethod {
+  SELF_PICKUP
+  NOVA_POSHTA
+  UKRPOSHTA
+}
+
+enum TransferStatus {
+  REQUESTED
+  AGREED
+  IN_TRANSIT
+  DELIVERED
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+enum TransactionType {
+  EARNED
+  SPENT
+  REFUNDED
+  ADJUSTED
+}
+
+enum HoldStatus {
+  ACTIVE
+  RELEASED
+  CAPTURED
+}
+
+enum DisputeCategory {
+  NON_DELIVERY
+  CONDITION_MISMATCH
+  WRONG_ITEM
+  LOAN_NOT_RETURNED
+  TRADE_IMBALANCE
+  OTHER
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+  CLOSED
+}

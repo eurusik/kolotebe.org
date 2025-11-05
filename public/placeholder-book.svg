@@ -1,0 +1,9 @@
+<svg width="300" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="400" fill="#111111"/>
+  <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="24" fill="#ff8c00" text-anchor="middle" dominant-baseline="middle">
+    No Cover
+  </text>
+  <text x="50%" y="60%" font-family="Arial, sans-serif" font-size="16" fill="#666" text-anchor="middle" dominant-baseline="middle">
+    Image
+  </text>
+</svg>
