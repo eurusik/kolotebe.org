@@ -38,7 +38,7 @@ export function BookCopyCard({
           </div>
           {!hasListing && (
             <Link href={`/listings/create?bookCopyId=${bookCopyId}`}>
-              <Button>Create Listing</Button>
+              <Button variant="outline">Create Listing</Button>
             </Link>
           )}
         </div>

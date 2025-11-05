@@ -21,7 +21,7 @@ export function KolokoinBalanceCard({ balance }: KolokoinBalanceCardProps) {
           <div className="text-5xl font-bold text-primary mb-2">{balance}</div>
           <div className="text-sm text-muted-foreground">KLC</div>
         </div>
-        <Button className="w-full" asChild>
+        <Button variant="outline" className="w-full" asChild>
           <Link href="#transactions">View Transaction History</Link>
         </Button>
       </CardContent>

@@ -5,7 +5,7 @@ export function ProfileHeader() {
   return (
     <div className="mb-8">
       <Link href="/">
-        <Button className="mb-4">← Back to Home</Button>
+        <Button variant="ghost" className="mb-4">← Back to Home</Button>
       </Link>
       <h1 className="text-4xl font-bold text-primary mb-2">My Profile</h1>
       <p className="text-muted-foreground">

@@ -38,47 +38,45 @@ export function ListingCard({ listing, showActions = true }: ListingCardProps) {
   return (
     <Link href={`/listings/${listing.slug}`}>
       <Card className="h-full hover:border-primary transition-colors cursor-pointer">
-        <CardContent className="p-4">
-          <div className="aspect-[3/4] relative mb-4 rounded-lg overflow-hidden bg-muted">
+        <CardContent className="p-3">
+          <div className="aspect-[2/3] relative mb-3 rounded-md overflow-hidden bg-muted">
             <Image
               src={coverImage}
               alt={book.title}
               fill
               className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           </div>
 
-          <h3 className="font-semibold text-lg mb-1 line-clamp-2">{book.title}</h3>
+          <h3 className="font-semibold text-lg mb-1.5 line-clamp-2">{book.title}</h3>
           <p className="text-sm text-muted-foreground mb-3">{book.author}</p>
 
-          <div className="flex flex-wrap gap-2 mb-3">
+          <div className="flex flex-wrap gap-1.5 mb-3">
             {listing.transferTypes.map((type) => (
-              <Badge key={type} variant="secondary" className="text-xs">
+              <Badge key={type} className="text-xs px-2 py-1">
                 {transferTypeLabels[type as keyof typeof transferTypeLabels]}
               </Badge>
             ))}
           </div>
 
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span>Condition: {conditionLabels[bookCopy.condition as keyof typeof conditionLabels]}</span>
+          <div className="text-sm text-muted-foreground mb-2.5">
+            {conditionLabels[bookCopy.condition as keyof typeof conditionLabels]}
           </div>
-        </CardContent>
 
-        <CardFooter className="p-4 pt-0">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             {bookCopy.owner.image && (
               <Image
                 src={bookCopy.owner.image}
                 alt={bookCopy.owner.name || "User"}
-                width={24}
-                height={24}
+                width={20}
+                height={20}
                 className="rounded-full"
               />
             )}
-            <span>{bookCopy.owner.name}</span>
+            <span className="truncate">{bookCopy.owner.name}</span>
           </div>
-        </CardFooter>
+        </CardContent>
       </Card>
     </Link>
   )

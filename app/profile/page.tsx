@@ -3,8 +3,10 @@ import { redirect } from "next/navigation"
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ListingCard } from "@/components/listing-card"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 import { ProfileHeader } from "@/components/profile/profile-header"
 import { ProfileInfoCard } from "@/components/profile/profile-info-card"
 import { KolokoinBalanceCard } from "@/components/profile/kolokoin-balance-card"
@@ -165,10 +167,12 @@ export default async function ProfilePage() {
   const balance = user?.balance?.balance || 0
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <ProfileHeader />
+    <>
+      <Header />
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <ProfileHeader />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - User Info & Balance */}
         <div className="lg:col-span-1 space-y-6">
           <ProfileInfoCard
@@ -194,11 +198,14 @@ export default async function ProfilePage() {
         <div className="lg:col-span-2 space-y-8">
           {/* Pending Requests for My Books */}
           {ownedTransfers.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold mb-6">
-                Pending Requests for My Books
-              </h2>
-              <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Pending Requests for My Books</CardTitle>
+                <CardDescription>
+                  Review and manage incoming requests from other members
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 {ownedTransfers.map((transfer) => (
                   <PendingRequestCard
                     key={transfer.id}
@@ -211,15 +218,20 @@ export default async function ProfilePage() {
                     createdAt={transfer.createdAt}
                   />
                 ))}
-              </div>
-            </section>
+              </CardContent>
+            </Card>
           )}
 
           {/* My Requests */}
           {requestedTransfers.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold mb-6">My Book Requests</h2>
-              <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>My Book Requests</CardTitle>
+                <CardDescription>
+                  Track your requests for books from other members
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 {requestedTransfers.map((transfer) => (
                   <MyRequestCard
                     key={transfer.id}
@@ -232,101 +244,119 @@ export default async function ProfilePage() {
                     createdAt={transfer.createdAt}
                   />
                 ))}
-              </div>
-            </section>
+              </CardContent>
+            </Card>
           )}
 
           {/* Active Listings */}
-          <section>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">My Active Listings</h2>
-              <Link href="/books/add">
-                <Button>Add New Book</Button>
-              </Link>
-            </div>
-
-            {activeListings.length === 0 ? (
-              <Card>
-                <CardContent className="py-12 text-center">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>My Active Listings</CardTitle>
+                  <CardDescription>
+                    Books currently available for sharing
+                  </CardDescription>
+                </div>
+                <Link href="/books/add">
+                  <Button>Add New Book</Button>
+                </Link>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {activeListings.length === 0 ? (
+                <div className="py-12 text-center">
                   <p className="text-muted-foreground mb-4">
                     You don't have any active listings yet.
                   </p>
                   <Link href="/books/add">
                     <Button>Create Your First Listing</Button>
                   </Link>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {activeListings.map((listing) => (
-                  <ListingCard
-                    key={listing.id}
-                    listing={listing}
-                    showActions={true}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {activeListings.map((listing) => (
+                    <ListingCard
+                      key={listing.id}
+                      listing={listing}
+                      showActions={true}
+                    />
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* My Books */}
-          <section>
-            <h2 className="text-2xl font-bold mb-6">All My Books</h2>
-            {bookCopies.length === 0 ? (
-              <Card>
-                <CardContent className="py-12 text-center">
+          <Card>
+            <CardHeader>
+              <CardTitle>All My Books</CardTitle>
+              <CardDescription>
+                Your complete book collection
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {bookCopies.length === 0 ? (
+                <div className="py-12 text-center">
                   <p className="text-muted-foreground mb-4">
                     You haven't added any books yet.
                   </p>
                   <Link href="/books/add">
                     <Button>Add Your First Book</Button>
                   </Link>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-3">
-                {bookCopies.map((copy) => (
-                  <BookCopyCard
-                    key={copy.id}
-                    bookCopyId={copy.id}
-                    title={copy.book.title}
-                    author={copy.book.author}
-                    condition={copy.condition}
-                    hasListing={!!copy.listing}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {bookCopies.map((copy) => (
+                    <BookCopyCard
+                      key={copy.id}
+                      bookCopyId={copy.id}
+                      title={copy.book.title}
+                      author={copy.book.author}
+                      condition={copy.condition}
+                      hasListing={!!copy.listing}
+                    />
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* Transaction History */}
-          <section id="transactions">
-            <h2 className="text-2xl font-bold mb-6">Transaction History</h2>
-            {transactions.length === 0 ? (
-              <Card>
-                <CardContent className="py-12 text-center">
+          <Card id="transactions">
+            <CardHeader>
+              <CardTitle>Transaction History</CardTitle>
+              <CardDescription>
+                Track your Kolokoin earnings and spending
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {transactions.length === 0 ? (
+                <div className="py-12 text-center">
                   <p className="text-muted-foreground">
                     No transactions yet. Share books to earn Kolocoins!
                   </p>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-3">
-                {transactions.map((tx) => (
-                  <TransactionItem
-                    key={tx.id}
-                    amount={tx.amount}
-                    type={tx.type}
-                    bookTitle={tx.transfer?.listing.bookCopy.book.title}
-                    description={tx.description}
-                    createdAt={tx.createdAt}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {transactions.map((tx) => (
+                    <TransactionItem
+                      key={tx.id}
+                      amount={tx.amount}
+                      type={tx.type}
+                      bookTitle={tx.transfer?.listing.bookCopy.book.title}
+                      description={tx.description}
+                      createdAt={tx.createdAt}
+                    />
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 }
