@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/lib/db/prisma"
 import { ListingCard } from "@/components/listing-card"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"

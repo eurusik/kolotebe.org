@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
-import { openApiSpec } from '@/lib/openapi'
-import { auth } from '@/lib/auth'
-import { checkUserRole } from '@/lib/user-roles'
+import { openApiSpec } from '@/lib/api/openapi'
+import { auth } from '@/lib/auth/config'
+import { checkUserRole } from '@/lib/auth/roles'
 
 export async function GET() {
   const session = await auth()

@@ -1,7 +1,7 @@
 import { ApiReference } from '@scalar/nextjs-api-reference'
-import { auth } from '@/lib/auth'
+import { auth } from '@/lib/auth/config'
 import { redirect } from 'next/navigation'
-import { checkUserRole } from '@/lib/user-roles'
+import { checkUserRole } from '@/lib/auth/roles'
 
 const configuration = {
   spec: {

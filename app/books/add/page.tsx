@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth"
+import { auth } from "@/lib/auth/config"
 import { redirect } from "next/navigation"
 import { AddBookForm } from "@/components/add-book-form"
 

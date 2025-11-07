@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth"
+import { auth } from "@/lib/auth/config"
 import { redirect } from "next/navigation"
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/lib/db/prisma"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"

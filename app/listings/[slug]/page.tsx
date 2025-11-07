@@ -1,5 +1,5 @@
-import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
+import { auth } from "@/lib/auth/config"
+import { prisma } from "@/lib/db/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"

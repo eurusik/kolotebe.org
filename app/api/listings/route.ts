@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
-import { generateListingSlug } from "@/lib/slugify"
+import { auth } from "@/lib/auth/config"
+import { prisma } from "@/lib/db/prisma"
+import { generateListingSlug } from "@/lib/utils/slugify"
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {

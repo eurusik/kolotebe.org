@@ -1,5 +1,5 @@
-import { auth } from "@/lib/auth"
-import { uploadFile } from "@/lib/upload"
+import { auth } from "@/lib/auth/config"
+import { uploadFile } from "@/lib/storage/upload"
 import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { auth, signOut } from "@/lib/auth"
-import { checkUserRole } from "@/lib/user-roles"
+import { auth, signOut } from "@/lib/auth/config"
+import { checkUserRole } from "@/lib/auth/roles"
 
 export async function Header() {
   const session = await auth()

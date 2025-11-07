@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google"
 import Resend from "next-auth/providers/resend"
 import Nodemailer from "next-auth/providers/nodemailer"
 import Credentials from "next-auth/providers/credentials"
-import { prisma } from "@/lib/prisma"
+import { prisma } from "@/lib/db/prisma"
 import bcrypt from "bcryptjs"
 import { z } from "zod"
 
