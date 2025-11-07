@@ -23,7 +23,21 @@ export async function POST(request: Request) {
 
     if (!bookCopyId || !transferTypes || !deliveryMethods) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Missing required fields: bookCopyId, transferTypes, deliveryMethods" },
+        { status: 400 }
+      )
+    }
+
+    if (!Array.isArray(transferTypes) || transferTypes.length === 0) {
+      return NextResponse.json(
+        { error: "transferTypes must be a non-empty array" },
+        { status: 400 }
+      )
+    }
+
+    if (!Array.isArray(deliveryMethods) || deliveryMethods.length === 0) {
+      return NextResponse.json(
+        { error: "deliveryMethods must be a non-empty array" },
         { status: 400 }
       )
     }
@@ -90,12 +104,58 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url)
+    const genre = searchParams.get('genre')
+    const transferType = searchParams.get('transferType')
+    const deliveryMethod = searchParams.get('deliveryMethod')
+    const search = searchParams.get('search')
+
     const listings = await prisma.listing.findMany({
       where: {
         status: "ACTIVE",
         deletedAt: null,
+        ...(genre && {
+          bookCopy: {
+            book: {
+              genre: {
+                contains: genre,
+                mode: 'insensitive',
+              },
+            },
+          },
+        }),
+        ...(transferType && {
+          transferTypes: {
+            has: transferType as any,
+          },
+        }),
+        ...(deliveryMethod && {
+          deliveryMethods: {
+            has: deliveryMethod as any,
+          },
+        }),
+        ...(search && {
+          bookCopy: {
+            book: {
+              OR: [
+                {
+                  title: {
+                    contains: search,
+                    mode: 'insensitive',
+                  },
+                },
+                {
+                  author: {
+                    contains: search,
+                    mode: 'insensitive',
+                  },
+                },
+              ],
+            },
+          },
+        }),
       },
       include: {
         bookCopy: {

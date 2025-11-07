@@ -23,6 +23,10 @@ model User {
   phoneVerified Boolean   @default(false)
   role          UserRole  @default(USER)
   
+  // Profile info
+  bio           String?   @db.Text
+  location      String?   // Free-form location (e.g., "Kyiv, Ukraine")
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
