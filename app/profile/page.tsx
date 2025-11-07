@@ -5,8 +5,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ListingCard } from "@/components/listings/listing-card"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
 import { ProfileHeader } from "@/components/profile/profile-header"
 import { ProfileInfoCard } from "@/components/profile/profile-info-card"
 import { KolocoinBalanceCard } from "@/components/profile/kolokoin-balance-card"
@@ -170,9 +168,7 @@ export default async function ProfilePage() {
   const balance = user?.balance?.balance || 0
 
   return (
-    <>
-      <Header />
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
         <ProfileHeader />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -358,8 +354,6 @@ export default async function ProfilePage() {
           </Card>
         </div>
       </div>
-      </div>
-      <Footer />
-    </>
+    </div>
   )
 }
