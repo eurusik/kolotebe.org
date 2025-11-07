@@ -1,9 +1,12 @@
 import { prisma } from "@/lib/db/prisma"
-import { ListingCard } from "@/components/listing-card"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { ListingCard } from "@/components/listings/listing-card"
+import { Header } from "@/components/layout/header"
+import { Footer } from "@/components/layout/footer"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+
+// Force dynamic rendering to avoid DB connection during build
+export const dynamic = 'force-dynamic'
 
 export default async function ListingsPage() {
   const listings = await prisma.listing.findMany({

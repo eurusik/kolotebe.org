@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Button } from "./ui/button"
-import { Label } from "./ui/label"
-import { Textarea } from "./ui/textarea"
-import { Checkbox } from "./ui/checkbox"
-import { Card, CardContent } from "./ui/card"
-import { ImageUpload } from "./image-upload"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Card, CardContent } from "@/components/ui/card"
+import { ImageUpload } from "@/components/shared/image-upload"
 import type { BookCopy, Book } from "@prisma/client"
 
 interface CreateListingFormProps {

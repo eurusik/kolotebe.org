@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth/config"
 import { prisma } from "@/lib/db/prisma"
 import { redirect } from "next/navigation"
-import { CreateListingForm } from "@/components/create-listing-form"
+import { CreateListingForm } from "@/components/books/create-listing-form"
 
 export default async function CreateListingPage({
   searchParams,

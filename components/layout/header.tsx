@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { signOut, useSession } from "next-auth/react"
 import { checkUserRole } from "@/lib/auth/roles"
-import { LocaleSwitcher } from "@/components/locale-switcher"
+import { LocaleSwitcher } from "@/components/layout/locale-switcher"
 import { useTranslation } from "@/lib/i18n/locale-provider"
 import { useEffect, useState } from "react"
 

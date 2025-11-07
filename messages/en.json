@@ -18,19 +18,20 @@
     "apiDocs": "API Docs"
   },
   "home": {
-    "title": "Share Books, Earn Kolocoins",
-    "description": "Join our community of book lovers. List your books, borrow from others, and earn Kolocoins for every share.",
+    "title": "Exchange Books in Community",
+    "description": "Platform for book exchange between readers. Share your favorite works, discover new ones, and build a reading community.",
     "getStarted": "Get Started",
     "browseCatalog": "Browse Catalog",
+    "availableOptions": "Available options",
     "features": {
-      "listBooks": "List Books",
-      "listBooksDesc": "Share your books with the community",
-      "tradeLoan": "Trade & Loan",
-      "tradeLoanDesc": "Exchange or lend books to others",
+      "listBooks": "Add Your Books",
+      "listBooksDesc": "That are on your shelf",
+      "tradeLoan": "Exchange & Borrow",
+      "tradeLoanDesc": "Discover new books from readers",
       "earnCoins": "Earn Kolocoins",
-      "earnCoinsDesc": "Get 1 KLC for every book shared",
+      "earnCoinsDesc": "1 KLC for every book exchange",
       "shareFree": "Share for Free",
-      "shareFreeDesc": "Give books away to build community"
+      "shareFreeDesc": "Give away read books to other readers"
     }
   },
   "listings": {
@@ -39,7 +40,8 @@
     "addYourBook": "Add Your Book",
     "noListings": "No listings available yet. Be the first to share!",
     "createListing": "Create Listing",
-    "availableBooks": "Available Books"
+    "availableBooks": "Available Books",
+    "viewAll": "View All \u2192"
   },
   "books": {
     "addBook": "Add Book",
@@ -77,5 +79,31 @@
     "editProfile": "Edit Profile",
     "bio": "Bio",
     "location": "Location"
+  },
+  "footer": {
+    "tagline": "Exchange books and build a reading community.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "browseBooks": "Browse Books",
+    "addBook": "Add Book",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "faq": "FAQ",
+    "contactUs": "Contact Us",
+    "legal": "Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "errors": {
+    "databaseConnection": "Unable to connect to database",
+    "databaseConnectionDesc": "Please check if the database server is running. Try refreshing the page in a few seconds.",
+    "networkError": "Network error. Please check your internet connection and try again.",
+    "authError": "Authentication error. Please sign in again.",
+    "notFoundError": "The requested resource was not found. Check the URL or return to the home page.",
+    "validationError": "Invalid data. Please check the information you entered and try again.",
+    "genericError": "An unexpected error occurred. Try refreshing the page or contact support.",
+    "technicalDetails": "Technical Details",
+    "tryAgain": "Try Again",
+    "somethingWentWrong": "Something went wrong"
   }
 }

@@ -3,15 +3,18 @@ import { prisma } from "@/lib/db/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { BookImageGallery } from "@/components/book-image-gallery"
-import { BookConditionBadge } from "@/components/listing/book-condition-badge"
-import { ListingTransferBadges } from "@/components/listing/listing-transfer-badges"
-import { ListingRequestButton } from "@/components/listing/listing-request-button"
-import { ListingBookDetails } from "@/components/listing/listing-book-details"
-import { ListingOwnerCard } from "@/components/listing/listing-owner-card"
-import { ListingRelatedBooks } from "@/components/listing/listing-related-books"
+import { Header } from "@/components/layout/header"
+import { Footer } from "@/components/layout/footer"
+import { BookImageGallery } from "@/components/books/book-image-gallery"
+import { BookConditionBadge } from "@/components/listings/book-condition-badge"
+import { ListingTransferBadges } from "@/components/listings/listing-transfer-badges"
+import { ListingRequestButton } from "@/components/listings/listing-request-button"
+import { ListingBookDetails } from "@/components/listings/listing-book-details"
+import { ListingOwnerCard } from "@/components/listings/listing-owner-card"
+import { ListingRelatedBooks } from "@/components/listings/listing-related-books"
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
 
 export default async function ListingDetailPage({
   params,

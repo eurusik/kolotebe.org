@@ -4,17 +4,20 @@ import { prisma } from "@/lib/db/prisma"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ListingCard } from "@/components/listing-card"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+import { ListingCard } from "@/components/listings/listing-card"
+import { Header } from "@/components/layout/header"
+import { Footer } from "@/components/layout/footer"
 import { ProfileHeader } from "@/components/profile/profile-header"
 import { ProfileInfoCard } from "@/components/profile/profile-info-card"
-import { KolocoinBalanceCard } from "@/components/profile/Kolocoin-balance-card"
+import { KolocoinBalanceCard } from "@/components/profile/kolokoin-balance-card"
 import { ProfileStatsCard } from "@/components/profile/profile-stats-card"
 import { PendingRequestCard } from "@/components/profile/pending-request-card"
 import { MyRequestCard } from "@/components/profile/my-request-card"
 import { BookCopyCard } from "@/components/profile/book-copy-card"
 import { TransactionItem } from "@/components/profile/transaction-item"
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
 
 export default async function ProfilePage() {
   const session = await auth()

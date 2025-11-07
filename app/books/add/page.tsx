@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth/config"
 import { redirect } from "next/navigation"
-import { AddBookForm } from "@/components/add-book-form"
+import { AddBookForm } from "@/components/books/add-book-form"
 
 export default async function AddBookPage() {
   const session = await auth()
