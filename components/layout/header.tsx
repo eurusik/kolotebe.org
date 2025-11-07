@@ -2,14 +2,18 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { signOut, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 import { checkUserRole } from "@/lib/auth/roles"
 import { LocaleSwitcher } from "@/components/layout/locale-switcher"
 import { useTranslation } from "@/lib/i18n/locale-provider"
 import { useEffect, useState } from "react"
+import type { Session } from "next-auth"
 
-export function Header() {
-  const { data: session } = useSession()
+interface HeaderProps {
+  session: Session | null
+}
+
+export function Header({ session }: HeaderProps) {
   const { t } = useTranslation()
   const [isDeveloper, setIsDeveloper] = useState(false)
   
