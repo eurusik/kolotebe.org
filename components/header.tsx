@@ -1,9 +1,16 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { auth, signOut } from "@/lib/auth"
+import { checkUserRole } from "@/lib/user-roles"
 
 export async function Header() {
   const session = await auth()
+  
+  let isDeveloper = false
+  if (session?.user?.email) {
+    const { isDeveloper: dev, role } = await checkUserRole(session.user.email)
+    isDeveloper = dev
+  }
 
   return (
     <header className="border-b border-border bg-sidebar sticky top-0 z-10">
@@ -23,6 +30,15 @@ export async function Header() {
               <Link href="/profile">
                 <Button variant="ghost">Profile</Button>
               </Link>
+              {isDeveloper ? (
+                <Link href="/api/reference/internal">
+                  <Button variant="ghost">API Docs</Button>
+                </Link>
+              ) : (
+                <Link href="/api/reference/public">
+                  <Button variant="ghost">API Docs</Button>
+                </Link>
+              )}
               <form
                 action={async () => {
                   "use server"
@@ -38,6 +54,9 @@ export async function Header() {
             <>
               <Link href="/listings">
                 <Button variant="ghost">Browse Books</Button>
+              </Link>
+              <Link href="/api/reference/public">
+                <Button variant="ghost">API Docs</Button>
               </Link>
               <Link href="/auth/signin">
                 <Button>Sign In</Button>

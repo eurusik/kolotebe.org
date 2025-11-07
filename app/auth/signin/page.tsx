@@ -29,10 +29,13 @@ export default function SignInPage() {
       const data = await res.json()
 
       if (data.exists && data.hasPassword) {
-        // User exists with password - show password field
+        // Existing user with password - show password field
         setStep("password")
+      } else if (data.exists && !data.hasPassword) {
+        // Existing user without password (OAuth) - show magic link
+        setStep("magic")
       } else {
-        // New user or passwordless user - show options
+        // New user - show signup options
         setStep("signup")
       }
     } catch (err) {
@@ -135,6 +138,7 @@ export default function SignInPage() {
           <CardDescription>
             {step === "email" && "Sign in to start sharing books and earning Kolocoins"}
             {step === "password" && "Welcome back! Enter your password"}
+            {step === "magic" && "Welcome back! We'll send you a magic link"}
             {step === "signup" && "Create your account or use magic link"}
           </CardDescription>
         </CardHeader>
@@ -248,6 +252,37 @@ export default function SignInPage() {
                 >
                   Forgot password? Send magic link instead
                 </button>
+              </div>
+            </>
+          )}
+
+          {/* Step 2b: Magic Link (Existing User without Password) */}
+          {step === "magic" && (
+            <>
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">Signing in as</p>
+                <p className="font-medium">{email}</p>
+                <button
+                  type="button"
+                  onClick={resetToEmail}
+                  className="text-xs text-primary hover:underline"
+                >
+                  Change email
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                <Button
+                  type="button"
+                  onClick={handleMagicLink}
+                  className="w-full"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Sending..." : "Send Magic Link"}
+                </Button>
+                <p className="text-xs text-center text-muted-foreground">
+                  We'll send you a secure link to sign in without a password
+                </p>
               </div>
             </>
           )}

@@ -1,12 +1,77 @@
-import { auth, signOut } from "@/lib/auth"
+import { auth } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { prisma } from "@/lib/prisma"
 import { ListingCard } from "@/components/listing-card"
+import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 
 export default async function HomePage() {
   const session = await auth()
+  
+  // For authenticated users, show full catalog like /listings page
+  if (session) {
+    const listings = await prisma.listing.findMany({
+      where: {
+        status: "ACTIVE",
+        deletedAt: null,
+      },
+      include: {
+        bookCopy: {
+          include: {
+            book: true,
+            owner: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    })
+
+    return (
+      <>
+        <Header />
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-3xl font-bold text-primary mb-2">Browse Books</h1>
+              <p className="text-muted-foreground">
+                Discover books shared by the community
+              </p>
+            </div>
+            <Link href="/books/add">
+              <Button>Add Your Book</Button>
+            </Link>
+          </div>
+
+          {listings.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-muted-foreground mb-4">
+                No listings available yet. Be the first to share a book!
+              </p>
+              <Link href="/books/add">
+                <Button>Add Book</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {listings.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+            </div>
+          )}
+        </div>
+        <Footer />
+      </>
+    )
+  }
 
   // Fetch latest listings for catalog
   const listings = await prisma.listing.findMany({
@@ -36,39 +101,7 @@ export default async function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col">
-      <header className="border-b border-border bg-sidebar sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            Kolotebe
-          </Link>
-          <nav className="flex items-center gap-4">
-            {session ? (
-              <>
-                <Link href="/books/add">
-                  <Button variant="ghost">Add Book</Button>
-                </Link>
-                <Link href="/profile">
-                  <Button variant="ghost">Profile</Button>
-                </Link>
-                <form
-                  action={async () => {
-                    "use server"
-                    await signOut()
-                  }}
-                >
-                  <Button variant="outline" type="submit">
-                    Sign Out
-                  </Button>
-                </form>
-              </>
-            ) : (
-              <Link href="/auth/signin">
-                <Button>Sign In</Button>
-              </Link>
-            )}
-          </nav>
-        </div>
-      </header>
+      <Header />
       
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">

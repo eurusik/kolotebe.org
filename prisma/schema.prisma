@@ -332,6 +332,7 @@ model Dispute {
 
 enum UserRole {
   USER
+  DEVELOPER
   MODERATOR
   ADMIN
 }

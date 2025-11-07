@@ -6,7 +6,7 @@ import { CreateListingForm } from "@/components/create-listing-form"
 export default async function CreateListingPage({
   searchParams,
 }: {
-  searchParams: { bookCopyId?: string }
+  searchParams: Promise<{ bookCopyId?: string }>
 }) {
   const session = await auth()
   
@@ -14,13 +14,15 @@ export default async function CreateListingPage({
     redirect("/auth/signin")
   }
 
-  if (!searchParams.bookCopyId) {
+  const params = await searchParams
+  
+  if (!params.bookCopyId) {
     redirect("/books/add")
   }
 
   const bookCopy = await prisma.bookCopy.findUnique({
     where: {
-      id: searchParams.bookCopyId,
+      id: params.bookCopyId,
       ownerId: session.user.id,
     },
     include: {
