@@ -1,7 +1,5 @@
 import { prisma } from "@/lib/db/prisma"
 import { ListingCard } from "@/components/listings/listing-card"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -34,9 +32,7 @@ export default async function ListingsPage() {
   })
 
   return (
-    <>
-      <Header />
-      <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-primary mb-2">Browse Books</h1>
@@ -65,8 +61,6 @@ export default async function ListingsPage() {
             ))}
           </div>
         )}
-      </div>
-      <Footer />
-    </>
+    </div>
   )
 }
