@@ -23,7 +23,7 @@ export function ProfileInfoCard({
   phoneVerified,
   createdAt,
 }: ProfileInfoCardProps) {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const userInitials = name
     ?.split(" ")
     .map((n) => n[0])
@@ -62,7 +62,7 @@ export function ProfileInfoCard({
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">{t('profile.memberSinceDate')}</p>
           <p className="font-medium">
-            {new Date(createdAt).toLocaleDateString("en-US", {
+            {new Date(createdAt).toLocaleDateString(locale, {
               year: "numeric",
               month: "long",
               day: "numeric",
