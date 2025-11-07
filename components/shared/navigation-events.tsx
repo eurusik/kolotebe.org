@@ -9,6 +9,11 @@ export function NavigationEvents() {
     const handleAnchorClick = (event: MouseEvent) => {
       const target = event.currentTarget as HTMLAnchorElement
       
+      // Don't start progress if click was on a button (event bubbling stopped)
+      if ((event.target as HTMLElement).tagName === 'BUTTON') {
+        return
+      }
+      
       // Only show progress for internal links
       if (target.host === window.location.host && !target.hash) {
         NProgress.start()

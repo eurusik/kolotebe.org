@@ -1,7 +1,10 @@
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { useTranslation } from "@/lib/i18n/locale-provider"
 
 interface ProfileInfoCardProps {
   name: string | null
@@ -20,6 +23,7 @@ export function ProfileInfoCard({
   phoneVerified,
   createdAt,
 }: ProfileInfoCardProps) {
+  const { t } = useTranslation()
   const userInitials = name
     ?.split(" ")
     .map((n) => n[0])
@@ -29,7 +33,7 @@ export function ProfileInfoCard({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Profile Information</CardTitle>
+        <CardTitle>{t('profile.profileInformation')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-4">
@@ -46,7 +50,7 @@ export function ProfileInfoCard({
               <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                 {phone}
                 {phoneVerified && (
-                  <Badge className="text-xs">Verified</Badge>
+                  <Badge className="text-xs">{t('profile.verified')}</Badge>
                 )}
               </p>
             )}
@@ -56,7 +60,7 @@ export function ProfileInfoCard({
         <Separator />
 
         <div className="space-y-2">
-          <p className="text-sm text-muted-foreground">Member since</p>
+          <p className="text-sm text-muted-foreground">{t('profile.memberSinceDate')}</p>
           <p className="font-medium">
             {new Date(createdAt).toLocaleDateString("en-US", {
               year: "numeric",

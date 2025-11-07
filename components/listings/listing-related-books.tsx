@@ -1,5 +1,8 @@
+'use client'
+
 import Link from "next/link"
 import Image from "next/image"
+import { useTranslation } from "@/lib/i18n/locale-provider"
 import { Book } from "@prisma/client"
 
 interface ListingRelatedBooksProps {
@@ -14,13 +17,15 @@ interface ListingRelatedBooksProps {
 }
 
 export function ListingRelatedBooks({ listings, ownerName }: ListingRelatedBooksProps) {
+  const { t } = useTranslation()
+  
   if (listings.length === 0) {
     return null
   }
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">More from {ownerName}</h2>
+      <h2 className="text-2xl font-bold mb-6">{t('listings.moreFrom')} {ownerName}</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {listings.map((listing) => (
           <Link

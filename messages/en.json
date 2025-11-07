@@ -41,7 +41,20 @@
     "noListings": "No listings available yet. Be the first to share!",
     "createListing": "Create Listing",
     "availableBooks": "Available Books",
-    "viewAll": "View All \u2192"
+    "viewAll": "View All →",
+    "startExchange": "Start Exchange",
+    "kolocoinTooltip": "Kolocoins — platform's internal currency for book exchanges",
+    "tradeTooltip": "Exchange for another book from your collection",
+    "loanTooltip": "Borrow for a period of time and return",
+    "home": "Home",
+    "allBooks": "All Books",
+    "condition": "Condition",
+    "by": "by",
+    "available": "Available",
+    "bookOwner": "Book Owner",
+    "memberSince": "Member since",
+    "viewProfile": "View Profile",
+    "moreFrom": "More from"
   },
   "books": {
     "addBook": "Add Book",
@@ -51,13 +64,16 @@
     "genre": "Genre",
     "condition": "Condition",
     "description": "Description",
-    "coverImage": "Cover Image"
+    "coverImage": "Cover Image",
+    "bookDetails": "Book Details",
+    "yearPublished": "Year Published",
+    "delivery": "Delivery"
   },
   "transferTypes": {
     "FREE": "Free",
     "FOR_KOLOCOINS": "For Kolocoins",
     "TRADE": "Trade",
-    "LOAN": "Loan"
+    "LOAN": "Borrow"
   },
   "deliveryMethods": {
     "SELF_PICKUP": "Self Pickup",
@@ -67,9 +83,9 @@
   "bookConditions": {
     "NEW": "New",
     "LIKE_NEW": "Like New",
-    "GOOD": "Good",
-    "FAIR": "Fair",
-    "POOR": "Poor"
+    "GOOD": "Good Condition",
+    "FAIR": "Average Condition",
+    "POOR": "Worn"
   },
   "profile": {
     "title": "Profile",
@@ -78,7 +94,36 @@
     "balance": "Kolocoins Balance",
     "editProfile": "Edit Profile",
     "bio": "Bio",
-    "location": "Location"
+    "location": "Location",
+    "pendingRequestsTitle": "Pending Requests for My Books",
+    "pendingRequestsDesc": "Review and manage incoming requests from other members",
+    "myRequestsTitle": "My Book Requests",
+    "myRequestsDesc": "Track your requests for books from other members",
+    "myActiveListings": "My Active Listings",
+    "booksAvailableForSharing": "Books currently available for sharing",
+    "addNewBook": "Add New Book",
+    "noActiveListings": "You don't have any active listings yet.",
+    "createFirstListing": "Create Your First Listing",
+    "allMyBooks": "All My Books",
+    "completeBookCollection": "Your complete book collection",
+    "noBooksYet": "You haven't added any books yet.",
+    "addFirstBook": "Add Your First Book",
+    "transactionHistory": "Transaction History",
+    "trackKolocoins": "Track your Kolocoin earnings and spending",
+    "noTransactions": "No transactions yet. Share books to earn Kolocoins!",
+    "backToHome": "← Back to Home",
+    "myProfile": "My Profile",
+    "manageProfile": "Manage your books, listings, and Kolocoin balance",
+    "profileInformation": "Profile Information",
+    "verified": "Verified",
+    "memberSinceDate": "Member since",
+    "kolocoinBalance": "Kolocoin Balance",
+    "earnKLC": "Earn 1 KLC for every book you share",
+    "viewTransactionHistory": "View Transaction History",
+    "statistics": "Statistics",
+    "activeListings": "Active Listings",
+    "pendingRequests": "Pending Requests",
+    "myRequests": "My Requests"
   },
   "footer": {
     "tagline": "Exchange books and build a reading community.",

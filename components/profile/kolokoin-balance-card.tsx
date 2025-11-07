@@ -1,5 +1,8 @@
+'use client'
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useTranslation } from "@/lib/i18n/locale-provider"
 import Link from "next/link"
 
 interface KolocoinBalanceCardProps {
@@ -7,14 +10,16 @@ interface KolocoinBalanceCardProps {
 }
 
 export function KolocoinBalanceCard({ balance }: KolocoinBalanceCardProps) {
+  const { t } = useTranslation()
+  
   return (
     <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <span className="text-2xl">🪙</span>
-          Kolocoin Balance
+          {t('profile.kolocoinBalance')}
         </CardTitle>
-        <CardDescription>Earn 1 KLC for every book you share</CardDescription>
+        <CardDescription>{t('profile.earnKLC')}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="text-center py-4">
@@ -22,7 +27,7 @@ export function KolocoinBalanceCard({ balance }: KolocoinBalanceCardProps) {
           <div className="text-sm text-muted-foreground">KLC</div>
         </div>
         <Button variant="outline" className="w-full" asChild>
-          <Link href="#transactions">View Transaction History</Link>
+          <Link href="#transactions">{t('profile.viewTransactionHistory')}</Link>
         </Button>
       </CardContent>
     </Card>

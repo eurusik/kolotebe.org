@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { Providers } from "./providers";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { auth } from "@/lib/auth/config";
+import { checkUserRole } from "@/lib/auth/roles";
 import { ProgressBar } from "@/components/shared/progress-bar";
 import { NavigationEvents } from "@/components/shared/navigation-events";
 
@@ -24,13 +25,20 @@ export default async function RootLayout({
   const locale = await getLocale()
   const session = await auth()
   
+  // Check if user is developer (server-side)
+  let isDeveloper = false
+  if (session?.user?.email) {
+    const roleCheck = await checkUserRole(session.user.email)
+    isDeveloper = roleCheck.isDeveloper
+  }
+  
   return (
     <html lang={locale}>
       <body className={inter.className}>
         <ProgressBar />
         <NavigationEvents />
         <Providers locale={locale}>
-          <Header session={session} />
+          <Header session={session} isDeveloper={isDeveloper} />
           <main className="flex min-h-screen flex-col">
             {children}
           </main>

@@ -41,7 +41,20 @@
     "noListings": "Поки що немає оголошень. Будьте першим!",
     "createListing": "Створити оголошення",
     "availableBooks": "Доступні книги",
-    "viewAll": "Переглянути всі →"
+    "viewAll": "Переглянути всі →",
+    "startExchange": "Почати обмін",
+    "kolocoinTooltip": "Колокоїни — внутрішня валюта платформи для обміну книгами",
+    "tradeTooltip": "Обміняти на іншу книгу з вашої колекції",
+    "loanTooltip": "Взяти почитати на певний час і повернути",
+    "home": "Головна",
+    "allBooks": "Всі книги",
+    "condition": "Стан",
+    "by": "автор",
+    "available": "Доступно",
+    "bookOwner": "Власник книги",
+    "memberSince": "Учасник з",
+    "viewProfile": "Переглянути профіль",
+    "moreFrom": "Більше від"
   },
   "books": {
     "addBook": "Додати книгу",
@@ -51,13 +64,16 @@
     "genre": "Жанр",
     "condition": "Стан",
     "description": "Опис",
-    "coverImage": "Обкладинка"
+    "coverImage": "Обкладинка",
+    "bookDetails": "Деталі книги",
+    "yearPublished": "Рік видання",
+    "delivery": "Доставка"
   },
   "transferTypes": {
     "FREE": "Безкоштовно",
     "FOR_KOLOCOINS": "За Колокоїни",
     "TRADE": "Обмін",
-    "LOAN": "Позичка"
+    "LOAN": "Почитати"
   },
   "deliveryMethods": {
     "SELF_PICKUP": "Самовивіз",
@@ -66,10 +82,10 @@
   },
   "bookConditions": {
     "NEW": "Нова",
-    "LIKE_NEW": "Як нова",
-    "GOOD": "Добрий",
-    "FAIR": "Задовільний",
-    "POOR": "Поганий"
+    "LIKE_NEW": "Майже нова",
+    "GOOD": "Гарний стан",
+    "FAIR": "Середній стан",
+    "POOR": "Зношена"
   },
   "profile": {
     "title": "Профіль",
@@ -78,7 +94,36 @@
     "balance": "Баланс Колокоїнів",
     "editProfile": "Редагувати профіль",
     "bio": "Про себе",
-    "location": "Місцезнаходження"
+    "location": "Місцезнаходження",
+    "pendingRequestsTitle": "Запити на мої книги",
+    "pendingRequestsDesc": "Перегляньте та керуйте вхідними запитами від інших учасників",
+    "myRequestsTitle": "Мої запити",
+    "myRequestsDesc": "Відстежуйте свої запити на книги від інших учасників",
+    "myActiveListings": "Мої активні оголошення",
+    "booksAvailableForSharing": "Книги, доступні для обміну",
+    "addNewBook": "Додати нову книгу",
+    "noActiveListings": "У вас ще немає активних оголошень.",
+    "createFirstListing": "Створити перше оголошення",
+    "allMyBooks": "Всі мої книги",
+    "completeBookCollection": "Ваша повна колекція книг",
+    "noBooksYet": "Ви ще не додали жодної книги.",
+    "addFirstBook": "Додати першу книгу",
+    "transactionHistory": "Історія транзакцій",
+    "trackKolocoins": "Відстежуйте свої зароблені та витрачені Колокоїни",
+    "noTransactions": "Поки що немає транзакцій. Діліться книгами, щоб заробити Колокоїни!",
+    "backToHome": "← Назад на головну",
+    "myProfile": "Мій профіль",
+    "manageProfile": "Керуйте своїми книгами, оголошеннями та балансом Колокоїнів",
+    "profileInformation": "Інформація профілю",
+    "verified": "Підтверджено",
+    "memberSinceDate": "Учасник з",
+    "kolocoinBalance": "Баланс Колокоїнів",
+    "earnKLC": "Отримуйте 1 KLC за кожну книгу, якою ви ділитеся",
+    "viewTransactionHistory": "Переглянути історію транзакцій",
+    "statistics": "Статистика",
+    "activeListings": "Активні оголошення",
+    "pendingRequests": "Очікуючі запити",
+    "myRequests": "Мої запити"
   },
   "footer": {
     "tagline": "Обмінюйтесь книгами та будуйте читацьку спільноту.",

@@ -2,8 +2,6 @@
 
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
 import { useTranslation } from '@/lib/i18n/locale-provider'
 import { classifyError, getErrorTranslationKey } from '@/lib/utils/error-types'
 
@@ -25,10 +23,7 @@ export default function Error({
   const errorMessageKey = getErrorTranslationKey(errorType)
 
   return (
-    <main className="flex min-h-screen flex-col">
-      <Header />
-      
-      <div className="container mx-auto px-4 py-16 flex-1 flex items-center justify-center">
+    <div className="container mx-auto px-4 py-16 flex-1 flex items-center justify-center">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-6">⚠️</div>
           <h1 className="text-3xl font-bold mb-4">{t('errors.somethingWentWrong')}</h1>
@@ -52,9 +47,6 @@ export default function Error({
             {t('errors.tryAgain')}
           </Button>
         </div>
-      </div>
-
-      <Footer />
-    </main>
+    </div>
   )
 }

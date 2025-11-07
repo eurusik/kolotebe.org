@@ -190,11 +190,7 @@ async function main() {
       slug: generateListingSlug(book4.title, book4.author, copy4.id),
       status: ListingStatus.ACTIVE,
       description: 'Classic dystopian novel. Must-read for everyone.',
-      photos: [
-        '/placeholder-book.svg',
-        '/placeholder-book.svg',
-        '/placeholder-book.svg',
-      ],
+      photos: [],
       transferTypes: [TransferType.FREE, TransferType.FOR_KOLOCOINS, TransferType.TRADE, TransferType.LOAN],
       deliveryMethods: [DeliveryMethod.SELF_PICKUP, DeliveryMethod.NOVA_POSHTA, DeliveryMethod.UKRPOSHTA],
       pickupLocation: 'Lviv, Central Station',

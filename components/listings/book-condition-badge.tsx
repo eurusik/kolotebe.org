@@ -1,4 +1,7 @@
+'use client'
+
 import { Badge } from "@/components/ui/badge"
+import { useTranslation } from "@/lib/i18n/locale-provider"
 import { BookCondition } from "@prisma/client"
 
 interface BookConditionBadgeProps {
@@ -7,6 +10,8 @@ interface BookConditionBadgeProps {
 }
 
 export function BookConditionBadge({ condition, className }: BookConditionBadgeProps) {
+  const { t } = useTranslation()
+  
   const getConditionColor = (cond: BookCondition) => {
     switch (cond) {
       case 'LIKE_NEW':
@@ -22,15 +27,9 @@ export function BookConditionBadge({ condition, className }: BookConditionBadgeP
     }
   }
 
-  const formatCondition = (cond: BookCondition) => {
-    return cond.split('_').map(word => 
-      word.charAt(0) + word.slice(1).toLowerCase()
-    ).join(' ')
-  }
-
   return (
     <Badge className={`${getConditionColor(condition)} border ${className || ''}`}>
-      {formatCondition(condition)}
+      {t(`bookConditions.${condition}`)}
     </Badge>
   )
 }

@@ -3,30 +3,18 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { signOut } from "next-auth/react"
-import { checkUserRole } from "@/lib/auth/roles"
 import { LocaleSwitcher } from "@/components/layout/locale-switcher"
 import { useTranslation } from "@/lib/i18n/locale-provider"
-import { useEffect, useState } from "react"
 import type { Session } from "next-auth"
 
 interface HeaderProps {
   session: Session | null
+  isDeveloper: boolean
 }
 
-export function Header({ session }: HeaderProps) {
+export function Header({ session, isDeveloper }: HeaderProps) {
   const { t } = useTranslation()
-  const [isDeveloper, setIsDeveloper] = useState(false)
   
-  useEffect(() => {
-    async function checkRole() {
-      if (session?.user?.email) {
-        const { isDeveloper: dev } = await checkUserRole(session.user.email)
-        setIsDeveloper(dev)
-      }
-    }
-    checkRole()
-  }, [session])
-
   return (
     <header className="border-b border-border bg-sidebar sticky top-0 z-10">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
