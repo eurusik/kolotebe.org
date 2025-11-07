@@ -54,7 +54,10 @@
     "bookOwner": "Book Owner",
     "memberSince": "Member since",
     "viewProfile": "View Profile",
-    "moreFrom": "More from"
+    "moreFrom": "More from",
+    "startExchange": "Start Exchange",
+    "addToWishlist": "Add to Wishlist",
+    "thisIsYourBook": "This is your book"
   },
   "books": {
     "addBook": "Add Book",

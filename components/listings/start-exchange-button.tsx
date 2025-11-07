@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { useTranslation } from "@/lib/i18n/locale-provider"
 import { ArrowRightLeft } from "lucide-react"
 
 interface StartExchangeButtonProps {
@@ -10,11 +11,13 @@ interface StartExchangeButtonProps {
 }
 
 export function StartExchangeButton({ isAuthenticated, isOwner }: StartExchangeButtonProps) {
+  const { t } = useTranslation()
+  
   if (isOwner) {
     return (
       <Button size="lg" className="w-full h-14 text-lg gap-3" disabled>
         <ArrowRightLeft className="h-6 w-6" />
-        This is your book
+        {t('listings.thisIsYourBook')}
       </Button>
     )
   }
@@ -24,7 +27,7 @@ export function StartExchangeButton({ isAuthenticated, isOwner }: StartExchangeB
       <Button size="lg" className="w-full h-14 text-lg gap-3" asChild>
         <Link href="/auth/signin">
           <ArrowRightLeft className="h-6 w-6" />
-          Start Exchange
+          {t('listings.startExchange')}
         </Link>
       </Button>
     )
@@ -33,7 +36,7 @@ export function StartExchangeButton({ isAuthenticated, isOwner }: StartExchangeB
   return (
     <Button size="lg" className="w-full h-14 text-lg gap-3">
       <ArrowRightLeft className="h-6 w-6" />
-      Start Exchange
+      {t('listings.startExchange')}
     </Button>
   )
 }

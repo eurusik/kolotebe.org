@@ -13,18 +13,8 @@ export function BookConditionBadge({ condition, className }: BookConditionBadgeP
   const { t } = useTranslation()
   
   const getConditionColor = (cond: BookCondition) => {
-    switch (cond) {
-      case 'LIKE_NEW':
-        return 'bg-green-500/10 text-green-400 border-green-500/20'
-      case 'GOOD':
-        return 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-      case 'FAIR':
-        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
-      case 'POOR':
-        return 'bg-red-500/10 text-red-400 border-red-500/20'
-      default:
-        return 'bg-gray-500/10 text-gray-400 border-gray-500/20'
-    }
+    // Unified dark theme - all conditions use same gray color
+    return 'bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600 transition-colors'
   }
 
   return (

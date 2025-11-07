@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeftRight, Coins } from "lucide-react"
+import { ArrowLeftRight, Coins, Gift, BookOpen } from "lucide-react"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -45,11 +45,31 @@ export function ListingCard({ listing, showActions = true }: ListingCardProps) {
     alert('Exchange flow will be implemented here')
   }
 
-  const transferTypeLabels: Record<string, { label: string; color: string; tooltipKey: string }> = {
-    FREE: { label: t('transferTypes.FREE'), color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200", tooltipKey: "" },
-    FOR_KOLOCOINS: { label: "1 KLC", color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200", tooltipKey: "listings.kolocoinTooltip" },
-    TRADE: { label: t('transferTypes.TRADE'), color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200", tooltipKey: "listings.tradeTooltip" },
-    LOAN: { label: t('transferTypes.LOAN'), color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200", tooltipKey: "listings.loanTooltip" },
+  const transferTypeLabels: Record<string, { label: string; icon: React.ReactNode; color: string; tooltipKey: string }> = {
+    FREE: { 
+      label: t('transferTypes.FREE'), 
+      icon: <Gift className="w-3.5 h-3.5" />,
+      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600", 
+      tooltipKey: "" 
+    },
+    FOR_KOLOCOINS: { 
+      label: "1 KLC", 
+      icon: <Coins className="w-3.5 h-3.5" />,
+      color: "bg-zinc-600 hover:bg-zinc-500 text-zinc-100 border border-zinc-500", 
+      tooltipKey: "listings.kolocoinTooltip" 
+    },
+    TRADE: { 
+      label: t('transferTypes.TRADE'), 
+      icon: <ArrowLeftRight className="w-3.5 h-3.5" />,
+      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600", 
+      tooltipKey: "listings.tradeTooltip" 
+    },
+    LOAN: { 
+      label: t('transferTypes.LOAN'), 
+      icon: <BookOpen className="w-3.5 h-3.5" />,
+      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600", 
+      tooltipKey: "listings.loanTooltip" 
+    },
   }
 
   return (
@@ -107,8 +127,9 @@ export function ListingCard({ listing, showActions = true }: ListingCardProps) {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Badge 
-                          className={`text-xs px-2 py-0.5 border-0 cursor-help ${typeInfo.color}`}
+                          className={`text-xs px-2 py-0.5 cursor-help transition-colors flex items-center gap-1 ${typeInfo.color}`}
                         >
+                          {typeInfo.icon}
                           {typeInfo.label}
                         </Badge>
                       </TooltipTrigger>

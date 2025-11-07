@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useTranslation } from "@/lib/i18n/locale-provider"
 import { TransferType } from "@prisma/client"
+import { Gift, Coins, ArrowLeftRight, BookOpen } from "lucide-react"
 
 interface ListingTransferBadgesProps {
   transferTypes: TransferType[]
@@ -12,30 +13,30 @@ interface ListingTransferBadgesProps {
 export function ListingTransferBadges({ transferTypes }: ListingTransferBadgesProps) {
   const { t } = useTranslation()
   
-  const transferConfig: Record<TransferType, { icon: string; labelKey: string; tooltipKey: string; color: string }> = {
+  const transferConfig: Record<TransferType, { icon: React.ReactNode; labelKey: string; tooltipKey: string; color: string }> = {
     FREE: { 
-      icon: "🎁", 
+      icon: <Gift className="w-4 h-4" />, 
       labelKey: "transferTypes.FREE", 
       tooltipKey: "transferTypes.FREE",
-      color: "bg-green-500/10 text-green-400 border-green-500/20" 
+      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600" 
     },
     FOR_KOLOCOINS: { 
-      icon: "🪙", 
+      icon: <Coins className="w-4 h-4" />, 
       labelKey: "transferTypes.FOR_KOLOCOINS", 
       tooltipKey: "listings.kolocoinTooltip",
-      color: "bg-primary/10 text-primary border-primary/20" 
+      color: "bg-zinc-600 hover:bg-zinc-500 text-zinc-100 border border-zinc-500" 
     },
     TRADE: { 
-      icon: "🔄", 
+      icon: <ArrowLeftRight className="w-4 h-4" />, 
       labelKey: "transferTypes.TRADE", 
       tooltipKey: "listings.tradeTooltip",
-      color: "bg-blue-500/10 text-blue-400 border-blue-500/20" 
+      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600" 
     },
     LOAN: { 
-      icon: "📚", 
+      icon: <BookOpen className="w-4 h-4" />, 
       labelKey: "transferTypes.LOAN", 
       tooltipKey: "listings.loanTooltip",
-      color: "bg-purple-500/10 text-purple-400 border-purple-500/20" 
+      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600" 
     },
   }
   
@@ -49,9 +50,9 @@ export function ListingTransferBadges({ transferTypes }: ListingTransferBadgesPr
             <Tooltip>
               <TooltipTrigger asChild>
                 <Badge 
-                  className={`${config.color} border gap-1.5 px-3 py-1 cursor-help`}
+                  className={`${config.color} gap-1.5 px-3 py-1 cursor-help transition-colors`}
                 >
-                  <span className="text-base">{config.icon}</span>
+                  {config.icon}
                   <span>{t(config.labelKey)}</span>
                 </Badge>
               </TooltipTrigger>

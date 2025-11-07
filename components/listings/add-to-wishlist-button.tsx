@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { useTranslation } from "@/lib/i18n/locale-provider"
 import { Heart } from "lucide-react"
 
 interface AddToWishlistButtonProps {
@@ -10,6 +11,8 @@ interface AddToWishlistButtonProps {
 }
 
 export function AddToWishlistButton({ isAuthenticated, isOwner }: AddToWishlistButtonProps) {
+  const { t } = useTranslation()
+  
   // Don't show for book owner
   if (isOwner) {
     return null
@@ -25,7 +28,7 @@ export function AddToWishlistButton({ isAuthenticated, isOwner }: AddToWishlistB
       >
         <Link href="/auth/signin">
           <Heart className="h-6 w-6" />
-          Add to Wishlist
+          {t('listings.addToWishlist')}
         </Link>
       </Button>
     )
@@ -38,7 +41,7 @@ export function AddToWishlistButton({ isAuthenticated, isOwner }: AddToWishlistB
       className="w-full h-14 text-lg gap-3"
     >
       <Heart className="h-6 w-6" />
-      Add to Wishlist
+      {t('listings.addToWishlist')}
     </Button>
   )
 }

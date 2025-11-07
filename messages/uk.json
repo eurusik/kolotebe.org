@@ -54,7 +54,10 @@
     "bookOwner": "Власник книги",
     "memberSince": "Учасник з",
     "viewProfile": "Переглянути профіль",
-    "moreFrom": "Більше від"
+    "moreFrom": "Більше від",
+    "startExchange": "Почати обмін",
+    "addToWishlist": "Додати в бажане",
+    "thisIsYourBook": "Це ваша книга"
   },
   "books": {
     "addBook": "Додати книгу",
