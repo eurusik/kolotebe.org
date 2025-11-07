@@ -1,16 +1,27 @@
+'use client'
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { auth, signOut } from "@/lib/auth/config"
+import { signOut, useSession } from "next-auth/react"
 import { checkUserRole } from "@/lib/auth/roles"
+import { LocaleSwitcher } from "@/components/locale-switcher"
+import { useTranslation } from "@/lib/i18n/locale-provider"
+import { useEffect, useState } from "react"
 
-export async function Header() {
-  const session = await auth()
+export function Header() {
+  const { data: session } = useSession()
+  const { t } = useTranslation()
+  const [isDeveloper, setIsDeveloper] = useState(false)
   
-  let isDeveloper = false
-  if (session?.user?.email) {
-    const { isDeveloper: dev, role } = await checkUserRole(session.user.email)
-    isDeveloper = dev
-  }
+  useEffect(() => {
+    async function checkRole() {
+      if (session?.user?.email) {
+        const { isDeveloper: dev } = await checkUserRole(session.user.email)
+        setIsDeveloper(dev)
+      }
+    }
+    checkRole()
+  }, [session])
 
   return (
     <header className="border-b border-border bg-sidebar sticky top-0 z-10">
@@ -19,47 +30,41 @@ export async function Header() {
           Kolotebe
         </Link>
         <nav className="flex items-center gap-4">
+          <LocaleSwitcher />
           {session ? (
             <>
               <Link href="/listings">
-                <Button variant="ghost">Browse Books</Button>
+                <Button variant="ghost">{t('header.browseBooks')}</Button>
               </Link>
               <Link href="/books/add">
-                <Button variant="ghost">Add Book</Button>
+                <Button variant="ghost">{t('header.addBook')}</Button>
               </Link>
               <Link href="/profile">
-                <Button variant="ghost">Profile</Button>
+                <Button variant="ghost">{t('common.profile')}</Button>
               </Link>
               {isDeveloper ? (
                 <Link href="/api/reference/internal">
-                  <Button variant="ghost">API Docs</Button>
+                  <Button variant="ghost">{t('header.apiDocs')}</Button>
                 </Link>
               ) : (
                 <Link href="/api/reference/public">
-                  <Button variant="ghost">API Docs</Button>
+                  <Button variant="ghost">{t('header.apiDocs')}</Button>
                 </Link>
               )}
-              <form
-                action={async () => {
-                  "use server"
-                  await signOut()
-                }}
-              >
-                <Button variant="outline" type="submit">
-                  Sign Out
-                </Button>
-              </form>
+              <Button variant="outline" onClick={() => signOut()}>
+                {t('common.signOut')}
+              </Button>
             </>
           ) : (
             <>
               <Link href="/listings">
-                <Button variant="ghost">Browse Books</Button>
+                <Button variant="ghost">{t('header.browseBooks')}</Button>
               </Link>
               <Link href="/api/reference/public">
-                <Button variant="ghost">API Docs</Button>
+                <Button variant="ghost">{t('header.apiDocs')}</Button>
               </Link>
               <Link href="/auth/signin">
-                <Button>Sign In</Button>
+                <Button>{t('common.signIn')}</Button>
               </Link>
             </>
           )}

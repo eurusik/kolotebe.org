@@ -1,0 +1,81 @@
+{
+  "common": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "profile": "Profile",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "close": "Close"
+  },
+  "header": {
+    "browseBooks": "Browse Books",
+    "addBook": "Add Book",
+    "apiDocs": "API Docs"
+  },
+  "home": {
+    "title": "Share Books, Earn Kolocoins",
+    "description": "Join our community of book lovers. List your books, borrow from others, and earn Kolocoins for every share.",
+    "getStarted": "Get Started",
+    "browseCatalog": "Browse Catalog",
+    "features": {
+      "listBooks": "List Books",
+      "listBooksDesc": "Share your books with the community",
+      "tradeLoan": "Trade & Loan",
+      "tradeLoanDesc": "Exchange or lend books to others",
+      "earnCoins": "Earn Kolocoins",
+      "earnCoinsDesc": "Get 1 KLC for every book shared",
+      "shareFree": "Share for Free",
+      "shareFreeDesc": "Give books away to build community"
+    }
+  },
+  "listings": {
+    "title": "Browse Books",
+    "description": "Discover books shared by the community",
+    "addYourBook": "Add Your Book",
+    "noListings": "No listings available yet. Be the first to share!",
+    "createListing": "Create Listing",
+    "availableBooks": "Available Books"
+  },
+  "books": {
+    "addBook": "Add Book",
+    "title": "Title",
+    "author": "Author",
+    "isbn": "ISBN",
+    "genre": "Genre",
+    "condition": "Condition",
+    "description": "Description",
+    "coverImage": "Cover Image"
+  },
+  "transferTypes": {
+    "FREE": "Free",
+    "FOR_KOLOCOINS": "For Kolocoins",
+    "TRADE": "Trade",
+    "LOAN": "Loan"
+  },
+  "deliveryMethods": {
+    "SELF_PICKUP": "Self Pickup",
+    "NOVA_POSHTA": "Nova Poshta",
+    "UKRPOSHTA": "Ukrposhta"
+  },
+  "bookConditions": {
+    "NEW": "New",
+    "LIKE_NEW": "Like New",
+    "GOOD": "Good",
+    "FAIR": "Fair",
+    "POOR": "Poor"
+  },
+  "profile": {
+    "title": "Profile",
+    "myBooks": "My Books",
+    "myListings": "My Listings",
+    "balance": "Kolocoins Balance",
+    "editProfile": "Edit Profile",
+    "bio": "Bio",
+    "location": "Location"
+  }
+}
