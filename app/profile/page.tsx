@@ -9,7 +9,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProfileHeader } from "@/components/profile/profile-header"
 import { ProfileInfoCard } from "@/components/profile/profile-info-card"
-import { KolokoinBalanceCard } from "@/components/profile/kolokoin-balance-card"
+import { KolocoinBalanceCard } from "@/components/profile/Kolocoin-balance-card"
 import { ProfileStatsCard } from "@/components/profile/profile-stats-card"
 import { PendingRequestCard } from "@/components/profile/pending-request-card"
 import { MyRequestCard } from "@/components/profile/my-request-card"
@@ -184,7 +184,7 @@ export default async function ProfilePage() {
             createdAt={user?.createdAt || new Date()}
           />
 
-          <KolokoinBalanceCard balance={balance} />
+          <KolocoinBalanceCard balance={balance} />
 
           <ProfileStatsCard
             booksCount={bookCopies.length}
@@ -327,7 +327,7 @@ export default async function ProfilePage() {
             <CardHeader>
               <CardTitle>Transaction History</CardTitle>
               <CardDescription>
-                Track your Kolokoin earnings and spending
+                Track your Kolocoin earnings and spending
               </CardDescription>
             </CardHeader>
             <CardContent>

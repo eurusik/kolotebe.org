@@ -9,7 +9,7 @@ export function ProfileHeader() {
       </Link>
       <h1 className="text-4xl font-bold text-primary mb-2">My Profile</h1>
       <p className="text-muted-foreground">
-        Manage your books, listings, and Kolokoin balance
+        Manage your books, listings, and Kolocoin balance
       </p>
     </div>
   )

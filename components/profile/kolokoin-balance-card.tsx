@@ -2,17 +2,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-interface KolokoinBalanceCardProps {
+interface KolocoinBalanceCardProps {
   balance: number
 }
 
-export function KolokoinBalanceCard({ balance }: KolokoinBalanceCardProps) {
+export function KolocoinBalanceCard({ balance }: KolocoinBalanceCardProps) {
   return (
     <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <span className="text-2xl">🪙</span>
-          Kolokoin Balance
+          Kolocoin Balance
         </CardTitle>
         <CardDescription>Earn 1 KLC for every book you share</CardDescription>
       </CardHeader>

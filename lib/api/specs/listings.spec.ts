@@ -62,8 +62,32 @@ export const listingsEndpoints = {
       },
     },
     post: {
-      summary: "Create a new listing",
-      description: "Create a listing for a book copy",
+      summary: "Create a listing",
+      description: `Create a public listing to share your book with the community.
+      
+**Before you start:**
+1. Add your book via POST /api/books (if not already added)
+2. Get your bookCopyId from the response or GET /api/book-copies
+3. Use that bookCopyId here to create a listing
+
+**What happens:**
+- Your book becomes visible in the public catalog (/api/listings)
+- Other users can request to exchange it
+- You can set multiple transfer types (FREE, FOR_KOLOCOINS, TRADE, LOAN)
+- You can set multiple delivery methods
+
+**Transfer Types explained:**
+- FREE: Give away for free
+- FOR_KOLOCOINS: Exchange for virtual currency (1 KLC = 1 book)
+- TRADE: Book-for-book exchange
+- LOAN: Temporary lending (book must be returned)
+
+**Delivery Methods:**
+- SELF_PICKUP: Meetup in person (specify pickupLocation)
+- NOVA_POSHTA: Ukrainian postal service
+- UKRPOSHTA: Ukrainian post office
+
+**Required fields:** bookCopyId, transferTypes (array), deliveryMethods (array)`,
       tags: ["Listings"],
       security: [{ bearerAuth: [] }],
       requestBody: {

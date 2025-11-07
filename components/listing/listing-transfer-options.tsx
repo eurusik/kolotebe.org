@@ -24,7 +24,7 @@ export function ListingTransferOptions({ transferTypes }: ListingTransferOptions
         {transferTypes.includes('FOR_KOLOCOINS') && (
           <div className="p-4 border-2 border-primary/30 bg-primary/5 rounded-lg text-center hover:border-primary/50 transition-colors cursor-pointer">
             <div className="text-2xl mb-2">🪙</div>
-            <div className="font-semibold text-primary">1 Kolokoin</div>
+            <div className="font-semibold text-primary">1 Kolocoin</div>
             <div className="text-xs text-muted-foreground">Pay with KLC</div>
           </div>
         )}
