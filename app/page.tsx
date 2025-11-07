@@ -1,7 +1,5 @@
 import { auth } from "@/lib/auth/config"
 import { prisma } from "@/lib/db/prisma"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
 import { HeroSection } from "@/components/home/hero-section"
 import { CatalogSection } from "@/components/home/catalog-section"
 
@@ -38,16 +36,12 @@ export default async function HomePage() {
     })
 
   return (
-    <main className="flex min-h-screen flex-col">
-      <Header />
-      
+    <>
       {/* Show Hero only for guests */}
       {!session && <HeroSection />}
 
       {/* Catalog Section */}
       <CatalogSection listings={listings} />
-
-      <Footer />
-    </main>
+    </>
   )
 }

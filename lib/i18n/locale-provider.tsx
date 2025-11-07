@@ -20,20 +20,13 @@ interface LocaleContextType {
 
 const LocaleContext = createContext<LocaleContextType | undefined>(undefined)
 
-export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('uk')
-
-  // Load locale from localStorage on mount
-  useEffect(() => {
-    const savedLocale = localStorage.getItem('locale') as Locale | null
-    if (savedLocale && (savedLocale === 'uk' || savedLocale === 'en')) {
-      setLocaleState(savedLocale)
-    }
-  }, [])
+export function LocaleProvider({ children, defaultLocale = 'uk' }: { children: ReactNode; defaultLocale?: 'uk' | 'en' }) {
+  const [locale, setLocaleState] = useState<Locale>(defaultLocale)
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale)
-    localStorage.setItem('locale', newLocale)
+    // Save to cookie
+    document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`
   }
 
   const t = (key: string): string => {
