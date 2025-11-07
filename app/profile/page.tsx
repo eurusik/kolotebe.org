@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth/config"
 import { redirect } from "next/navigation"
 import { prisma } from "@/lib/db/prisma"
+import { ListingStatus, TransferStatus } from "@prisma/client"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -55,7 +56,7 @@ export default async function ProfilePage() {
   const activeListings = await prisma.listing.findMany({
     where: {
       userId: session.user.id,
-      status: "ACTIVE",
+      status: ListingStatus.ACTIVE,
       deletedAt: null,
     },
     include: {
@@ -108,7 +109,7 @@ export default async function ProfilePage() {
     where: {
       requesterId: session.user.id,
       status: {
-        in: ["REQUESTED", "AGREED", "IN_TRANSIT", "DELIVERED"],
+        in: [TransferStatus.REQUESTED, TransferStatus.AGREED, TransferStatus.IN_TRANSIT, TransferStatus.DELIVERED],
       },
     },
     include: {
@@ -139,7 +140,7 @@ export default async function ProfilePage() {
     where: {
       ownerId: session.user.id,
       status: {
-        in: ["REQUESTED", "AGREED", "IN_TRANSIT", "DELIVERED"],
+        in: [TransferStatus.REQUESTED, TransferStatus.AGREED, TransferStatus.IN_TRANSIT, TransferStatus.DELIVERED],
       },
     },
     include: {

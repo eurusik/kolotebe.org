@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, UserRole, BookCondition, ListingStatus, TransferType, DeliveryMethod, LocationType } from '@prisma/client'
 import { generateListingSlug } from '../lib/utils/slugify'
 
 const prisma = new PrismaClient()
@@ -13,7 +13,7 @@ async function main() {
     create: {
       email: 'john.rusakov@gmail.com',
       name: 'John Rusakov',
-      role: 'ADMIN',
+      role: UserRole.ADMIN,
       phoneVerified: true,
     },
   })
@@ -24,7 +24,7 @@ async function main() {
     create: {
       email: 'test@example.com',
       name: 'Test User',
-      role: 'USER',
+      role: UserRole.USER,
       phoneVerified: true,
     },
   })
@@ -104,7 +104,7 @@ async function main() {
     data: {
       bookId: book1.id,
       ownerId: user1.id,
-      condition: 'GOOD',
+      condition: BookCondition.GOOD,
       notes: 'Ukrainian edition, great condition',
       isAvailable: true,
     },
@@ -114,7 +114,7 @@ async function main() {
     data: {
       bookId: book2.id,
       ownerId: user1.id,
-      condition: 'LIKE_NEW',
+      condition: BookCondition.LIKE_NEW,
       notes: 'English translation, almost new',
       isAvailable: true,
     },
@@ -125,7 +125,7 @@ async function main() {
     data: {
       bookId: book3.id,
       ownerId: user2.id,
-      condition: 'GOOD',
+      condition: BookCondition.GOOD,
       notes: 'English original, some wear on cover',
       isAvailable: true,
     },
@@ -135,7 +135,7 @@ async function main() {
     data: {
       bookId: book4.id,
       ownerId: user2.id,
-      condition: 'FAIR',
+      condition: BookCondition.FAIR,
       notes: 'Old edition, readable condition',
       isAvailable: true,
     },
@@ -149,10 +149,10 @@ async function main() {
       bookCopyId: copy1.id,
       userId: user1.id,
       slug: generateListingSlug(book1.title, book1.author, copy1.id),
-      status: 'ACTIVE',
+      status: ListingStatus.ACTIVE,
       description: 'Classic Ukrainian poetry collection. Perfect for learning Ukrainian culture.',
-      transferTypes: ['FREE', 'FOR_KOLOCOINS'],
-      deliveryMethods: ['SELF_PICKUP', 'NOVA_POSHTA'],
+      transferTypes: [TransferType.FREE, TransferType.FOR_KOLOCOINS],
+      deliveryMethods: [DeliveryMethod.SELF_PICKUP, DeliveryMethod.NOVA_POSHTA],
       pickupLocation: 'Kyiv, Khreshchatyk Street',
     },
   })
@@ -162,10 +162,10 @@ async function main() {
       bookCopyId: copy2.id,
       userId: user1.id,
       slug: generateListingSlug(book2.title, book2.author, copy2.id),
-      status: 'ACTIVE',
+      status: ListingStatus.ACTIVE,
       description: 'Amazing novel, highly recommended! Almost new condition.',
-      transferTypes: ['FOR_KOLOCOINS', 'TRADE'],
-      deliveryMethods: ['SELF_PICKUP', 'NOVA_POSHTA', 'UKRPOSHTA'],
+      transferTypes: [TransferType.FOR_KOLOCOINS, TransferType.TRADE],
+      deliveryMethods: [DeliveryMethod.SELF_PICKUP, DeliveryMethod.NOVA_POSHTA, DeliveryMethod.UKRPOSHTA],
       pickupLocation: 'Kyiv, Podil area',
     },
   })
@@ -175,10 +175,10 @@ async function main() {
       bookCopyId: copy3.id,
       userId: user2.id,
       slug: generateListingSlug(book3.title, book3.author, copy3.id),
-      status: 'ACTIVE',
+      status: ListingStatus.ACTIVE,
       description: 'First Harry Potter book. Great for kids and adults alike!',
-      transferTypes: ['FOR_KOLOCOINS', 'LOAN'],
-      deliveryMethods: ['SELF_PICKUP', 'NOVA_POSHTA'],
+      transferTypes: [TransferType.FOR_KOLOCOINS, TransferType.LOAN],
+      deliveryMethods: [DeliveryMethod.SELF_PICKUP, DeliveryMethod.NOVA_POSHTA],
       pickupLocation: 'Lviv, Rynok Square',
     },
   })
@@ -188,15 +188,15 @@ async function main() {
       bookCopyId: copy4.id,
       userId: user2.id,
       slug: generateListingSlug(book4.title, book4.author, copy4.id),
-      status: 'ACTIVE',
+      status: ListingStatus.ACTIVE,
       description: 'Classic dystopian novel. Must-read for everyone.',
       photos: [
         '/placeholder-book.svg',
         '/placeholder-book.svg',
         '/placeholder-book.svg',
       ],
-      transferTypes: ['FREE', 'FOR_KOLOCOINS', 'TRADE', 'LOAN'],
-      deliveryMethods: ['SELF_PICKUP', 'NOVA_POSHTA', 'UKRPOSHTA'],
+      transferTypes: [TransferType.FREE, TransferType.FOR_KOLOCOINS, TransferType.TRADE, TransferType.LOAN],
+      deliveryMethods: [DeliveryMethod.SELF_PICKUP, DeliveryMethod.NOVA_POSHTA, DeliveryMethod.UKRPOSHTA],
       pickupLocation: 'Lviv, Central Station',
     },
   })
@@ -207,7 +207,7 @@ async function main() {
   await prisma.userLocation.create({
     data: {
       userId: user1.id,
-      type: 'HOME',
+      type: LocationType.HOME,
       isDefault: true,
       street: 'Khreshchatyk Street, 1',
       city: 'Kyiv',
@@ -219,7 +219,7 @@ async function main() {
   await prisma.userLocation.create({
     data: {
       userId: user2.id,
-      type: 'HOME',
+      type: LocationType.HOME,
       isDefault: true,
       street: 'Rynok Square, 5',
       city: 'Lviv',

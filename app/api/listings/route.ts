@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth/config"
 import { prisma } from "@/lib/db/prisma"
+import { ListingStatus } from "@prisma/client"
 import { generateListingSlug } from "@/lib/utils/slugify"
 import { NextResponse } from "next/server"
 
@@ -90,7 +91,7 @@ export async function POST(request: Request) {
         transferTypes,
         deliveryMethods,
         pickupLocation: pickupLocation || null,
-        status: "ACTIVE",
+        status: ListingStatus.ACTIVE,
       },
     })
 
@@ -114,7 +115,7 @@ export async function GET(request: Request) {
 
     const listings = await prisma.listing.findMany({
       where: {
-        status: "ACTIVE",
+        status: ListingStatus.ACTIVE,
         deletedAt: null,
         ...(genre && {
           bookCopy: {

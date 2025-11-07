@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth/config"
 import { prisma } from "@/lib/db/prisma"
+import { ListingStatus } from "@prisma/client"
 import { NextResponse } from "next/server"
 
 export async function GET() {
@@ -17,7 +18,7 @@ export async function GET() {
         _count: {
           select: {
             bookCopies: { where: { deletedAt: null } },
-            listings: { where: { status: "ACTIVE", deletedAt: null } },
+            listings: { where: { status: ListingStatus.ACTIVE, deletedAt: null } },
           },
         },
       },

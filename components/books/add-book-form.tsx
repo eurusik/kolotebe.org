@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { BookCondition } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -18,14 +19,23 @@ export function AddBookForm({ userId }: AddBookFormProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string
+    author: string
+    isbn: string
+    genre: string
+    publicationYear: string
+    description: string
+    condition: BookCondition
+    notes: string
+  }>({
     title: "",
     author: "",
     isbn: "",
     genre: "",
     publicationYear: "",
     description: "",
-    condition: "GOOD",
+    condition: BookCondition.GOOD,
     notes: "",
   })
 
@@ -131,7 +141,7 @@ export function AddBookForm({ userId }: AddBookFormProps) {
             <Label htmlFor="condition">Book Condition *</Label>
             <Select
               value={formData.condition}
-              onValueChange={(value) => setFormData({ ...formData, condition: value })}
+              onValueChange={(value) => setFormData({ ...formData, condition: value as BookCondition })}
             >
               <SelectTrigger id="condition">
                 <SelectValue />

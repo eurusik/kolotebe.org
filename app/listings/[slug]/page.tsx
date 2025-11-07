@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth/config"
 import { prisma } from "@/lib/db/prisma"
+import { ListingStatus } from "@prisma/client"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -69,7 +70,7 @@ export default async function ListingDetailPage({
       slug: {
         not: listing.slug,
       },
-      status: 'ACTIVE',
+      status: ListingStatus.ACTIVE,
       deletedAt: null,
     },
     include: {

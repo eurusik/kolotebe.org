@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth/config"
 import { prisma } from "@/lib/db/prisma"
+import { ListingStatus } from "@prisma/client"
 import { HeroSection } from "@/components/home/hero-section"
 import { CatalogSection } from "@/components/home/catalog-section"
 
@@ -12,7 +13,7 @@ export default async function HomePage() {
   // Fetch listings for catalog
   const listings = await prisma.listing.findMany({
       where: {
-        status: "ACTIVE",
+        status: ListingStatus.ACTIVE,
         deletedAt: null,
       },
       include: {
