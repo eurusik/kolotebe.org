@@ -6,6 +6,8 @@ import { Footer } from "@/components/layout/footer";
 import { Providers } from "./providers";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { auth } from "@/lib/auth/config";
+import { ProgressBar } from "@/components/shared/progress-bar";
+import { NavigationEvents } from "@/components/shared/navigation-events";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -25,6 +27,8 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
+        <ProgressBar />
+        <NavigationEvents />
         <Providers locale={locale}>
           <Header session={session} />
           <main className="flex min-h-screen flex-col">

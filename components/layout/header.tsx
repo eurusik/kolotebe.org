@@ -37,9 +37,6 @@ export function Header({ session }: HeaderProps) {
           <LocaleSwitcher />
           {session ? (
             <>
-              <Link href="/listings">
-                <Button variant="ghost">{t('header.browseBooks')}</Button>
-              </Link>
               <Link href="/books/add">
                 <Button variant="ghost">{t('header.addBook')}</Button>
               </Link>
@@ -61,9 +58,6 @@ export function Header({ session }: HeaderProps) {
             </>
           ) : (
             <>
-              <Link href="/listings">
-                <Button variant="ghost">{t('header.browseBooks')}</Button>
-              </Link>
               <Link href="/api/reference/public">
                 <Button variant="ghost">{t('header.apiDocs')}</Button>
               </Link>
