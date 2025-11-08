@@ -3,13 +3,14 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { BookCondition } from "@prisma/client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent } from "@/components/ui/card"
-import { useTranslation } from "@/lib/i18n/locale-provider"
+import { BookBasicInfoSection } from "./form-sections/book-basic-info-section"
+import { BookMetadataSection } from "./form-sections/book-metadata-section"
+import { BookCoverUploadSection } from "./form-sections/book-cover-upload-section"
+import { BookDescriptionSection } from "./form-sections/book-description-section"
+import { BookConditionSection } from "./form-sections/book-condition-section"
+import { BookNotesSection } from "./form-sections/book-notes-section"
+import { FormActions } from "./form-sections/form-actions"
 
 interface AddBookFormProps {
   userId: string
@@ -17,9 +18,10 @@ interface AddBookFormProps {
 
 export function AddBookForm({ userId }: AddBookFormProps) {
   const router = useRouter()
-  const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [coverImages, setCoverImages] = useState<{ file: File; preview: string; id: string }[]>([])
+  const [selectedCoverId, setSelectedCoverId] = useState<string | null>(null)
   
   const [formData, setFormData] = useState<{
     title: string
@@ -47,6 +49,9 @@ export function AddBookForm({ userId }: AddBookFormProps) {
     setError(null)
 
     try {
+      // TODO: Upload cover image to S3/R2 if provided
+      // For now, we'll skip the image upload
+      
       const response = await fetch("/api/books", {
         method: "POST",
         headers: {
@@ -69,105 +74,96 @@ export function AddBookForm({ userId }: AddBookFormProps) {
     }
   }
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    if (files.length === 0) return
+
+    const newImages = files.map((file) => {
+      const id = Math.random().toString(36).substring(7)
+      return new Promise<{ file: File; preview: string; id: string }>((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          resolve({
+            file,
+            preview: reader.result as string,
+            id,
+          })
+        }
+        reader.readAsDataURL(file)
+      })
+    })
+
+    Promise.all(newImages).then((images) => {
+      setCoverImages((prev) => [...prev, ...images])
+      if (!selectedCoverId && images.length > 0) {
+        setSelectedCoverId(images[0].id)
+      }
+    })
+
+    // Reset input
+    e.target.value = ''
+  }
+
+  const handleRemoveImage = (id: string) => {
+    setCoverImages((prev) => prev.filter((img) => img.id !== id))
+    if (selectedCoverId === id) {
+      setCoverImages((prev) => {
+        if (prev.length > 0) {
+          setSelectedCoverId(prev[0].id)
+        } else {
+          setSelectedCoverId(null)
+        }
+        return prev
+      })
+    }
+  }
+
+  const handleSelectCover = (id: string) => {
+    setSelectedCoverId(id)
+  }
+
   return (
     <Card>
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="title">{t('books.titleLabel')}</Label>
-            <Input
-              id="title"
-              required
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder={t('books.titlePlaceholder')}
-            />
-          </div>
+          <BookBasicInfoSection
+            title={formData.title}
+            author={formData.author}
+            onTitleChange={(value) => setFormData({ ...formData, title: value })}
+            onAuthorChange={(value) => setFormData({ ...formData, author: value })}
+          />
 
-          <div className="space-y-2">
-            <Label htmlFor="author">{t('books.authorLabel')}</Label>
-            <Input
-              id="author"
-              required
-              value={formData.author}
-              onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-              placeholder={t('books.authorPlaceholder')}
-            />
-          </div>
+          <BookMetadataSection
+            isbn={formData.isbn}
+            publicationYear={formData.publicationYear}
+            genre={formData.genre}
+            onIsbnChange={(value) => setFormData({ ...formData, isbn: value })}
+            onPublicationYearChange={(value) => setFormData({ ...formData, publicationYear: value })}
+            onGenreChange={(value) => setFormData({ ...formData, genre: value })}
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="isbn">{t('books.isbnLabel')}</Label>
-              <Input
-                id="isbn"
-                value={formData.isbn}
-                onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
-                placeholder={t('books.isbnPlaceholder')}
-              />
-            </div>
+          <BookCoverUploadSection
+            coverImages={coverImages}
+            selectedCoverId={selectedCoverId}
+            onImagesChange={handleImageChange}
+            onRemoveImage={handleRemoveImage}
+            onSelectCover={handleSelectCover}
+          />
 
-            <div className="space-y-2">
-              <Label htmlFor="publicationYear">{t('books.publicationYearLabel')}</Label>
-              <Input
-                id="publicationYear"
-                type="number"
-                value={formData.publicationYear}
-                onChange={(e) => setFormData({ ...formData, publicationYear: e.target.value })}
-                placeholder={t('books.publicationYearPlaceholder')}
-              />
-            </div>
-          </div>
+          <BookDescriptionSection
+            description={formData.description}
+            onDescriptionChange={(value) => setFormData({ ...formData, description: value })}
+          />
 
-          <div className="space-y-2">
-            <Label htmlFor="genre">{t('books.genreLabel')}</Label>
-            <Input
-              id="genre"
-              value={formData.genre}
-              onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
-              placeholder={t('books.genrePlaceholder')}
-            />
-          </div>
+          <BookConditionSection
+            condition={formData.condition}
+            onConditionChange={(value) => setFormData({ ...formData, condition: value })}
+          />
 
-          <div className="space-y-2">
-            <Label htmlFor="description">{t('books.descriptionLabel')}</Label>
-            <Textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder={t('books.descriptionPlaceholder')}
-              rows={4}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="condition">{t('books.conditionLabel')}</Label>
-            <Select
-              value={formData.condition}
-              onValueChange={(value) => setFormData({ ...formData, condition: value as BookCondition })}
-            >
-              <SelectTrigger id="condition">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="NEW">{t('bookConditions.NEW')}</SelectItem>
-                <SelectItem value="LIKE_NEW">{t('bookConditions.LIKE_NEW')}</SelectItem>
-                <SelectItem value="GOOD">{t('bookConditions.GOOD')}</SelectItem>
-                <SelectItem value="FAIR">{t('bookConditions.FAIR')}</SelectItem>
-                <SelectItem value="POOR">{t('bookConditions.POOR')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="notes">{t('books.personalNotesLabel')}</Label>
-            <Textarea
-              id="notes"
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder={t('books.personalNotesPlaceholder')}
-              rows={3}
-            />
-          </div>
+          <BookNotesSection
+            notes={formData.notes}
+            onNotesChange={(value) => setFormData({ ...formData, notes: value })}
+          />
 
           {error && (
             <div className="p-4 bg-destructive/10 border border-destructive rounded-md">
@@ -175,19 +171,10 @@ export function AddBookForm({ userId }: AddBookFormProps) {
             </div>
           )}
 
-          <div className="flex gap-4">
-            <Button type="submit" disabled={loading} className="flex-1">
-              {loading ? t('books.addingBook') : t('books.continueToListing')}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.back()}
-              disabled={loading}
-            >
-              {t('books.cancel')}
-            </Button>
-          </div>
+          <FormActions
+            loading={loading}
+            onCancel={() => router.back()}
+          />
         </form>
       </CardContent>
     </Card>
