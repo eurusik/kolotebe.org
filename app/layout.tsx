@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -10,7 +10,17 @@ import { checkUserRole } from "@/lib/auth/roles";
 import { ProgressBar } from "@/components/shared/progress-bar";
 import { NavigationEvents } from "@/components/shared/navigation-events";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
+const inter = Inter({ 
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const montserrat = Montserrat({ 
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Kolotebe - Book Sharing Platform",
@@ -34,7 +44,7 @@ export default async function RootLayout({
   
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={`${inter.variable} ${montserrat.variable} font-sans`} suppressHydrationWarning>
         <ProgressBar />
         <NavigationEvents />
         <Providers locale={locale}>

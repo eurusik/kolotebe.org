@@ -23,7 +23,7 @@ export function Header({ session, isDeveloper }: HeaderProps) {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-6">
           {/* Left: Logo */}
-          <Link href="/" className="text-2xl font-bold text-primary whitespace-nowrap">
+          <Link href="/" className="text-2xl font-display font-bold text-primary whitespace-nowrap">
             Kolotebe
           </Link>
 
