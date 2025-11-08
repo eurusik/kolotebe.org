@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent } from "@/components/ui/card"
+import { useTranslation } from "@/lib/i18n/locale-provider"
 
 interface AddBookFormProps {
   userId: string
@@ -16,6 +17,7 @@ interface AddBookFormProps {
 
 export function AddBookForm({ userId }: AddBookFormProps) {
   const router = useRouter()
+  const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   
@@ -72,73 +74,73 @@ export function AddBookForm({ userId }: AddBookFormProps) {
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Book Title *</Label>
+            <Label htmlFor="title">{t('books.titleLabel')}</Label>
             <Input
               id="title"
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Enter book title"
+              placeholder={t('books.titlePlaceholder')}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="author">Author *</Label>
+            <Label htmlFor="author">{t('books.authorLabel')}</Label>
             <Input
               id="author"
               required
               value={formData.author}
               onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-              placeholder="Enter author name"
+              placeholder={t('books.authorPlaceholder')}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="isbn">ISBN (optional)</Label>
+              <Label htmlFor="isbn">{t('books.isbnLabel')}</Label>
               <Input
                 id="isbn"
                 value={formData.isbn}
                 onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
-                placeholder="978-0-123456-78-9"
+                placeholder={t('books.isbnPlaceholder')}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="publicationYear">Publication Year (optional)</Label>
+              <Label htmlFor="publicationYear">{t('books.publicationYearLabel')}</Label>
               <Input
                 id="publicationYear"
                 type="number"
                 value={formData.publicationYear}
                 onChange={(e) => setFormData({ ...formData, publicationYear: e.target.value })}
-                placeholder="2023"
+                placeholder={t('books.publicationYearPlaceholder')}
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="genre">Genre (optional)</Label>
+            <Label htmlFor="genre">{t('books.genreLabel')}</Label>
             <Input
               id="genre"
               value={formData.genre}
               onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
-              placeholder="Fiction, Non-fiction, etc."
+              placeholder={t('books.genrePlaceholder')}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description (optional)</Label>
+            <Label htmlFor="description">{t('books.descriptionLabel')}</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Brief description of the book"
+              placeholder={t('books.descriptionPlaceholder')}
               rows={4}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="condition">Book Condition *</Label>
+            <Label htmlFor="condition">{t('books.conditionLabel')}</Label>
             <Select
               value={formData.condition}
               onValueChange={(value) => setFormData({ ...formData, condition: value as BookCondition })}
@@ -147,22 +149,22 @@ export function AddBookForm({ userId }: AddBookFormProps) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="NEW">New - Unread, pristine condition</SelectItem>
-                <SelectItem value="LIKE_NEW">Like New - Minimal wear</SelectItem>
-                <SelectItem value="GOOD">Good - Normal used condition</SelectItem>
-                <SelectItem value="FAIR">Fair - Noticeable wear but readable</SelectItem>
-                <SelectItem value="POOR">Poor - Significant wear</SelectItem>
+                <SelectItem value="NEW">{t('bookConditions.NEW')}</SelectItem>
+                <SelectItem value="LIKE_NEW">{t('bookConditions.LIKE_NEW')}</SelectItem>
+                <SelectItem value="GOOD">{t('bookConditions.GOOD')}</SelectItem>
+                <SelectItem value="FAIR">{t('bookConditions.FAIR')}</SelectItem>
+                <SelectItem value="POOR">{t('bookConditions.POOR')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="notes">Personal Notes (optional)</Label>
+            <Label htmlFor="notes">{t('books.personalNotesLabel')}</Label>
             <Textarea
               id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder="Any additional notes about this copy"
+              placeholder={t('books.personalNotesPlaceholder')}
               rows={3}
             />
           </div>
@@ -175,7 +177,7 @@ export function AddBookForm({ userId }: AddBookFormProps) {
 
           <div className="flex gap-4">
             <Button type="submit" disabled={loading} className="flex-1">
-              {loading ? "Adding Book..." : "Continue to Create Listing"}
+              {loading ? t('books.addingBook') : t('books.continueToListing')}
             </Button>
             <Button
               type="button"
@@ -183,7 +185,7 @@ export function AddBookForm({ userId }: AddBookFormProps) {
               onClick={() => router.back()}
               disabled={loading}
             >
-              Cancel
+              {t('books.cancel')}
             </Button>
           </div>
         </form>
