@@ -1,13 +1,14 @@
 'use client'
 
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { signOut } from "next-auth/react"
 import { LocaleSwitcher } from "@/components/layout/locale-switcher"
 import { ThemeSwitcher } from "@/components/layout/theme-switcher"
 import { SearchBar } from "@/components/layout/search-bar"
 import { useTranslation } from "@/lib/i18n/locale-provider"
-import { Plus, User } from "lucide-react"
+import { Plus } from "lucide-react"
 import type { Session } from "next-auth"
 
 interface HeaderProps {
@@ -48,8 +49,20 @@ export function Header({ session, isDeveloper }: HeaderProps) {
             
             {session ? (
               <Link href="/profile">
-                <Button variant="ghost" size="icon" className="w-10 h-10">
-                  <User className="w-5 h-5" />
+                <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full p-0 overflow-hidden">
+                  {session.user?.image ? (
+                    <Image
+                      src={session.user.image}
+                      alt={session.user.name || "User"}
+                      width={40}
+                      height={40}
+                      className="rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                      {session.user?.name?.charAt(0).toUpperCase() || session.user?.email?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                  )}
                 </Button>
               </Link>
             ) : (
