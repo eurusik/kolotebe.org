@@ -82,16 +82,16 @@ export function HeroSection() {
           <div className="mt-12 flex justify-center">
             <div className="inline-flex flex-wrap gap-3 items-center px-6 py-4 bg-sidebar/50 border border-border rounded-full">
               <span className="text-sm text-muted-foreground">{t('home.availableOptions')}:</span>
-              <span className="px-3 py-1 text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20 rounded-full">
+              <span className="px-3 py-1 text-xs font-medium bg-success/10 text-success border border-success/20 rounded-full">
                 {t('transferTypes.FREE')}
               </span>
               <span className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary border border-primary/20 rounded-full">
                 1 KLC
               </span>
-              <span className="px-3 py-1 text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full">
+              <span className="px-3 py-1 text-xs font-medium bg-info/10 text-info border border-info/20 rounded-full">
                 {t('transferTypes.TRADE')}
               </span>
-              <span className="px-3 py-1 text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20 rounded-full">
+              <span className="px-3 py-1 text-xs font-medium bg-warning/10 text-warning border border-warning/20 rounded-full">
                 {t('transferTypes.LOAN')}
               </span>
             </div>

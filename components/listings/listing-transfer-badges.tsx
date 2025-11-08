@@ -18,25 +18,25 @@ export function ListingTransferBadges({ transferTypes }: ListingTransferBadgesPr
       icon: <Gift className="w-4 h-4" />, 
       labelKey: "transferTypes.FREE", 
       tooltipKey: "transferTypes.FREE",
-      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600" 
+      color: "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border" 
     },
     FOR_KOLOCOINS: { 
       icon: <Coins className="w-4 h-4" />, 
       labelKey: "transferTypes.FOR_KOLOCOINS", 
       tooltipKey: "listings.kolocoinTooltip",
-      color: "bg-zinc-600 hover:bg-zinc-500 text-zinc-100 border border-zinc-500" 
+      color: "bg-muted hover:bg-muted/80 text-muted-foreground border border-border" 
     },
     TRADE: { 
       icon: <ArrowLeftRight className="w-4 h-4" />, 
       labelKey: "transferTypes.TRADE", 
       tooltipKey: "listings.tradeTooltip",
-      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600" 
+      color: "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border" 
     },
     LOAN: { 
       icon: <BookOpen className="w-4 h-4" />, 
       labelKey: "transferTypes.LOAN", 
       tooltipKey: "listings.loanTooltip",
-      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600" 
+      color: "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border" 
     },
   }
   

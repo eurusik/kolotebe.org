@@ -144,7 +144,7 @@ export default function SignInPage() {
         </CardHeader>
         <CardContent className="space-y-6">
           {error && (
-            <div className="p-3 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-md">
+            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
               {error}
             </div>
           )}

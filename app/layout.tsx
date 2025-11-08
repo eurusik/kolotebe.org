@@ -33,8 +33,8 @@ export default async function RootLayout({
   }
   
   return (
-    <html lang={locale}>
-      <body className={inter.className}>
+    <html lang={locale} suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
         <ProgressBar />
         <NavigationEvents />
         <Providers locale={locale}>

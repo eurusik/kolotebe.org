@@ -2,6 +2,7 @@
 
 import { SessionProvider } from "next-auth/react"
 import { LocaleProvider } from "@/lib/i18n/locale-provider"
+import { ThemeProvider } from "@/lib/theme/theme-provider"
 import { ReactNode } from "react"
 
 interface ProvidersProps {
@@ -12,9 +13,16 @@ interface ProvidersProps {
 export function Providers({ children, locale }: ProvidersProps) {
   return (
     <SessionProvider>
-      <LocaleProvider defaultLocale={locale}>
-        {children}
-      </LocaleProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <LocaleProvider defaultLocale={locale}>
+          {children}
+        </LocaleProvider>
+      </ThemeProvider>
     </SessionProvider>
   )
 }

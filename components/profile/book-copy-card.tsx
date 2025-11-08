@@ -28,7 +28,7 @@ export function BookCopyCard({
             <div className="flex gap-2 mt-2">
               <Badge>{condition.replace("_", " ")}</Badge>
               {hasListing ? (
-                <Badge className="bg-green-500/10 text-green-400 border-green-500/20">
+                <Badge className="bg-success/10 text-success border-success/20">
                   Listed
                 </Badge>
               ) : (

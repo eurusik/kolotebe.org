@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { BookCoverPlaceholder } from "./book-cover-placeholder"
+import { WishlistButton } from "./wishlist-button"
 import { useTranslation } from "@/lib/i18n/locale-provider"
 import type { Listing, BookCopy, Book, User } from "@prisma/client"
 
@@ -49,25 +50,25 @@ export function ListingCard({ listing, showActions = true }: ListingCardProps) {
     FREE: { 
       label: t('transferTypes.FREE'), 
       icon: <Gift className="w-3.5 h-3.5" />,
-      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600", 
+      color: "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border", 
       tooltipKey: "" 
     },
     FOR_KOLOCOINS: { 
       label: "1 KLC", 
       icon: <Coins className="w-3.5 h-3.5" />,
-      color: "bg-zinc-600 hover:bg-zinc-500 text-zinc-100 border border-zinc-500", 
+      color: "bg-muted hover:bg-muted/80 text-muted-foreground border border-border", 
       tooltipKey: "listings.kolocoinTooltip" 
     },
     TRADE: { 
       label: t('transferTypes.TRADE'), 
       icon: <ArrowLeftRight className="w-3.5 h-3.5" />,
-      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600", 
+      color: "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border", 
       tooltipKey: "listings.tradeTooltip" 
     },
     LOAN: { 
       label: t('transferTypes.LOAN'), 
       icon: <BookOpen className="w-3.5 h-3.5" />,
-      color: "bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600", 
+      color: "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border", 
       tooltipKey: "listings.loanTooltip" 
     },
   }
@@ -89,23 +90,22 @@ export function ListingCard({ listing, showActions = true }: ListingCardProps) {
               <BookCoverPlaceholder title={book.title} condition={bookCopy.condition} />
             )}
             
-            {/* Price/Free Badge */}
-            {listing.transferTypes.includes('FOR_KOLOCOINS') ? (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="absolute bottom-3 left-3 bg-white/95 text-black px-3 py-1.5 rounded-lg font-bold text-lg shadow-lg flex items-center gap-1.5 cursor-help">
-                      <Coins className="w-5 h-5" />
-                      1 KLC
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{t('listings.kolocoinTooltip')}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+            {/* Wishlist button - top left */}
+            <WishlistButton listingId={listing.id} />
+            
+            {/* Main badge - show primary exchange option (not KLC) */}
+            {listing.transferTypes.includes('TRADE') ? (
+              <div className="absolute bottom-3 left-3 bg-primary/15 text-primary px-3 py-1.5 rounded-lg font-semibold text-sm shadow-md border border-primary/30 flex items-center gap-1.5">
+                <ArrowLeftRight className="w-4 h-4" />
+                {t('transferTypes.TRADE')}
+              </div>
+            ) : listing.transferTypes.includes('LOAN') ? (
+              <div className="absolute bottom-3 left-3 bg-primary/15 text-primary px-3 py-1.5 rounded-lg font-semibold text-sm shadow-md border border-primary/30 flex items-center gap-1.5">
+                <BookOpen className="w-4 h-4" />
+                {t('transferTypes.LOAN')}
+              </div>
             ) : listing.transferTypes.includes('FREE') ? (
-              <div className="absolute bottom-3 left-3 bg-green-600 text-white px-3 py-1.5 rounded-lg font-bold text-lg shadow-lg">
+              <div className="absolute bottom-3 left-3 bg-primary/5 text-primary/60 px-2.5 py-1 rounded-lg font-medium text-xs shadow-sm border border-primary/10">
                 {t('transferTypes.FREE')}
               </div>
             ) : null}
@@ -119,7 +119,7 @@ export function ListingCard({ listing, showActions = true }: ListingCardProps) {
 
           <div className="flex flex-wrap gap-1.5 mb-3">
             {listing.transferTypes
-              .filter(type => type !== 'FOR_KOLOCOINS' && type !== 'FREE') // Hide price types
+              .filter(type => type !== 'TRADE' && type !== 'LOAN' && type !== 'FREE') // Show only KLC in small badges
               .map((type) => {
                 const typeInfo = transferTypeLabels[type as keyof typeof transferTypeLabels]
                 return (
@@ -152,7 +152,7 @@ export function ListingCard({ listing, showActions = true }: ListingCardProps) {
                 className="rounded-full"
               />
             ) : (
-              <div className="w-6 h-6 rounded-full bg-zinc-700/20 flex items-center justify-center text-xs font-semibold text-zinc-400">
+              <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-xs font-semibold text-muted-foreground">
                 {bookCopy.owner.name?.charAt(0).toUpperCase() || "?"}
               </div>
             )}

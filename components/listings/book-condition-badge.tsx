@@ -14,7 +14,7 @@ export function BookConditionBadge({ condition, className }: BookConditionBadgeP
   
   const getConditionColor = (cond: BookCondition) => {
     // Unified dark theme - all conditions use same gray color
-    return 'bg-zinc-700 hover:bg-zinc-600 text-zinc-200 border border-zinc-600 transition-colors'
+    return 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border transition-colors'
   }
 
   return (

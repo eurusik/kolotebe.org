@@ -22,7 +22,7 @@ export function TransactionItem({
           <div className="flex items-center gap-4">
             <div
               className={`text-2xl ${
-                amount > 0 ? "text-green-400" : "text-red-400"
+                amount > 0 ? "text-success" : "text-destructive"
               }`}
             >
               {amount > 0 ? "+" : ""}

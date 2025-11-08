@@ -10,12 +10,17 @@
     "edit": "Edit",
     "search": "Search",
     "filter": "Filter",
-    "close": "Close"
+    "close": "Close",
+    "theme": "Theme",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode"
   },
   "header": {
     "browseBooks": "Browse Books",
     "addBook": "Add Book",
-    "apiDocs": "API Docs"
+    "apiDocs": "API Docs",
+    "searchPlaceholder": "Search books by title, author...",
+    "search": "Search"
   },
   "home": {
     "title": "Exchange Books in Community",
@@ -43,7 +48,7 @@
     "availableBooks": "Available Books",
     "viewAll": "View All →",
     "startExchange": "Start Exchange",
-    "kolocoinTooltip": "Kolocoins — platform's internal currency for book exchanges",
+    "kolocoinTooltip": "Share books — earn Kolocoins. Spend them on books from other readers",
     "tradeTooltip": "Exchange for another book from your collection",
     "loanTooltip": "Borrow for a period of time and return",
     "home": "Home",
@@ -73,7 +78,7 @@
     "delivery": "Delivery"
   },
   "transferTypes": {
-    "FREE": "Free",
+    "FREE": "Free exchange",
     "FOR_KOLOCOINS": "For Kolocoins",
     "TRADE": "Trade",
     "LOAN": "Borrow"

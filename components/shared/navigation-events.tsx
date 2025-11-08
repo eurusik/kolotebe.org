@@ -8,9 +8,14 @@ export function NavigationEvents() {
     // Intercept all link clicks
     const handleAnchorClick = (event: MouseEvent) => {
       const target = event.currentTarget as HTMLAnchorElement
+      const clickedElement = event.target as HTMLElement
       
-      // Don't start progress if click was on a button (event bubbling stopped)
-      if ((event.target as HTMLElement).tagName === 'BUTTON') {
+      // Don't start progress if clicked on a button or inside a button
+      if (
+        clickedElement.tagName === 'BUTTON' ||
+        clickedElement.closest('button') ||
+        clickedElement.getAttribute('role') === 'button'
+      ) {
         return
       }
       
